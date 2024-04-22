@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .field_with_errors .fl { @apply text-red-600; }
+  .field_with_errors .fi { @apply border-red-600; }
+}
