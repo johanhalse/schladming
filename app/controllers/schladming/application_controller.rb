@@ -12,12 +12,12 @@ module Schladming
     end
 
     def edit
-      resource = resource_class.find(params[:id])
+      resource = find(params[:id])
       render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:)
     end
 
     def update
-      resource = resource_class.find(params[:id])
+      resource = find(params[:id])
 
       if resource.update(permitted_params)
         after_update if respond_to?(:after_update)
@@ -46,7 +46,7 @@ module Schladming
     end
 
     def destroy
-      resource = resource_class.find(params[:id])
+      resource = find(params[:id])
       if resource.destroy
         redirect_to [:admin, resource.model_name.plural.to_sym], notice: t(".successful")
       else
@@ -55,7 +55,15 @@ module Schladming
       end
     end
 
+    def find_by
+      "id"
+    end
+
     private
+
+    def find(id)
+      resource_class.find_by!(find_by => id)
+    end
 
     def permitted_params
       params.require(controller_name.singularize).permit! if params[controller_name.singularize].present?
@@ -99,13 +107,13 @@ module Schladming
     end
 
     def count
-      with_scope(Post.all).count
+      with_scope(resource_class.all).count
     end
 
     def resources
       with_pagination(
         with_sorting(
-          with_scope(Post.all)
+          with_scope(resource_class.all)
         )
       )
     end

@@ -8,6 +8,14 @@ module UI
       render PanelComponent.new(name:, &block)
     end
 
+    def cash_field(name, *)
+      render CashFieldComponent.new(form: @form, name:)
+    end
+
+    def datetime_field(name, *)
+      render DateTimeFieldComponent.new(form: @form, name:)
+    end
+
     def enum_field(name, *)
       render EnumFieldComponent.new(form: @form, name:)
     end

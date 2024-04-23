@@ -1,14 +1,20 @@
-class TabComponent < ApplicationComponent
+class TabComponent< SchladmingComponent
+  include UI::Classes
+
+  register_element :admin_tab_controller
+
   def initialize(name:, open:)
     @name = name
     @open = open
-    @id = name.gsub(" ", "_").gsub(/[^a-zA-Z\d\w]/, "").downcase
+    @id = "tab_" + name.gsub(" ", "_").gsub(/[^a-zA-Z\d\w]/, "").downcase
   end
 
   def clickable_tab_template
     template_tag(id: "template_#{@id}") do
-      li(class: "p-1 rounded bg-cyan-800 text-white") do
-        label(for: @id) { @name }
+      li do
+        admin_tab_controller do
+          label(class: TAB + TAB_NEUTRAL, data: { action: "click->admin-tab#mark" }, for: @id) { @name }
+        end
       end
     end
   end

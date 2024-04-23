@@ -1,5 +1,5 @@
 module Admin
-  class EditView < ApplicationView
+  class EditView < SchladmingView
     include Phlex::Rails::Helpers::LinkTo
     include Phlex::Rails::Helpers::FormFor
     include UI::Fields
@@ -35,8 +35,9 @@ module Admin
             link_to([:admin, @resource], data: { turbo_method: "delete" }, class: BUTTON_ALERT) { "Destroy" }
           end
         end
-        div(class: "p-4") do
-          h1(class: "block my-4 text-2xl") { name }
+        div(class: "px-4 md:pl-0") do
+          link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4])
+          h1(class: H1) { name }
 
           ul(id: "tabs", class: "flex gap-1 hidden")
           div(class: "lg:flex gap-4") do

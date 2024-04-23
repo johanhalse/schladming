@@ -1,4 +1,4 @@
-class SchladmingLayout < ApplicationView
+class SchladmingLayout < SchladmingView
   include Phlex::Rails::Layout
   include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::JavascriptIncludeTag
@@ -9,7 +9,7 @@ class SchladmingLayout < ApplicationView
     ul(class: "w-1/6 hidden md:block") do
       comptrollers.each do |route|
         li do
-          link_to(route_name(route), [:admin, route.to_sym], class: "block w-full border-b px-4 py-2")
+          link_to(route_name(route), [:admin, route.to_sym], class: "block w-full px-4 py-2")
         end
       end
     end
@@ -33,7 +33,7 @@ class SchladmingLayout < ApplicationView
         title { "Bidders Highway - #{helpers.controller_name} - #{helpers.params[:id]}" }
         csrf_meta_tags
         csp_meta_tag
-        stylesheet_link_tag("schladming-tailwind", "inter-font", "data-turbo-track": "reload")
+        stylesheet_link_tag("schladming-tailwind", "inter-font", "flatpickr.min", "data-turbo-track": "reload")
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
       end
 

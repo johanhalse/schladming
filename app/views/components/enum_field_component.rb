@@ -1,4 +1,4 @@
-class EnumFieldComponent < ApplicationComponent
+class EnumFieldComponent< SchladmingComponent
   include UI::Classes
 
   def initialize(form:, name:)

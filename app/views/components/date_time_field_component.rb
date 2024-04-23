@@ -1,5 +1,7 @@
-class TextFieldComponent< SchladmingComponent
+class DateTimeFieldComponent< SchladmingComponent
   include UI::Classes
+
+  register_element :datetime_select_controller
 
   def initialize(form:, name:)
     @form = form
@@ -7,7 +9,7 @@ class TextFieldComponent< SchladmingComponent
   end
 
   def view_template
-    div(class: FIELD_CONTAINER) do
+    datetime_select_controller(class: FIELD_CONTAINER) do
       @form.label(@name, class: FIELD_LABEL)
       @form.text_field(@name, class: FIELD_INPUT)
     end

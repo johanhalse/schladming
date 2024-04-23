@@ -19,7 +19,7 @@ module Schladming
       Rails.autoloaders.main.push_dir("#{root}/app/views")
       Rails.autoloaders.main.push_dir("#{root}/app/views/layouts")
       Rails.autoloaders.main.push_dir("#{root}/app/views/components")
-      Rails.application.config.assets.precompile += %w[schladming-tailwind.css inter-font.css schladming.js]
+      Rails.application.config.assets.precompile += %w[schladming-tailwind.css inter-font.css flatpickr.min.css schladming.js]
     end
   end
 end

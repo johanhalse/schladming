@@ -10,7 +10,7 @@ export default class ClickableRowController extends Controller {
   }
 
   click(e) {
-    if (e.target.tagName == "A") {
+    if (e.target.tagName == "A" || e.target.tagName == "INPUT") {
       return true;
     }
     e.preventDefault();

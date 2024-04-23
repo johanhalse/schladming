@@ -1,4 +1,4 @@
-class FlashMessageComponent < ApplicationComponent
+class FlashMessageComponent< SchladmingComponent
   def view_template
     div(class: "bg-neutral-300") do
       helpers.flash.each do |type, msg|
