@@ -24,6 +24,10 @@ module UI
       render ImageFieldComponent.new(form: @form, name:)
     end
 
+    def relation_field(name, model_name, **)
+      render RelationFieldComponent.new(form: @form, name:, model_name:, **)
+    end
+
     def text_field(name, **)
       render TextFieldComponent.new(form: @form, name:, **)
     end

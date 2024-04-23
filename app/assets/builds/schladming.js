@@ -1,14 +1,37 @@
 (() => {
+  var __create = Object.create;
   var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
   var __esm = (fn, res) => function __init() {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+  };
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
   };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
 
   // node_modules/@rails/actioncable/src/adapters.js
   var adapters_default;
@@ -614,6 +637,85 @@
       init_logger();
       __name(createConsumer, "createConsumer");
       __name(getConfig, "getConfig");
+    }
+  });
+
+  // node_modules/debounce/index.js
+  var require_debounce = __commonJS({
+    "node_modules/debounce/index.js"(exports, module) {
+      function debounce4(function_, wait = 100, options = {}) {
+        if (typeof function_ !== "function") {
+          throw new TypeError(`Expected the first parameter to be a function, got \`${typeof function_}\`.`);
+        }
+        if (wait < 0) {
+          throw new RangeError("`wait` must not be negative.");
+        }
+        const { immediate } = typeof options === "boolean" ? { immediate: options } : options;
+        let storedContext;
+        let storedArguments;
+        let timeoutId;
+        let timestamp;
+        let result;
+        function later() {
+          const last = Date.now() - timestamp;
+          if (last < wait && last >= 0) {
+            timeoutId = setTimeout(later, wait - last);
+          } else {
+            timeoutId = void 0;
+            if (!immediate) {
+              const callContext = storedContext;
+              const callArguments = storedArguments;
+              storedContext = void 0;
+              storedArguments = void 0;
+              result = function_.apply(callContext, callArguments);
+            }
+          }
+        }
+        __name(later, "later");
+        const debounced = /* @__PURE__ */ __name(function(...arguments_) {
+          if (storedContext && this !== storedContext) {
+            throw new Error("Debounced method called with different contexts.");
+          }
+          storedContext = this;
+          storedArguments = arguments_;
+          timestamp = Date.now();
+          const callNow = immediate && !timeoutId;
+          if (!timeoutId) {
+            timeoutId = setTimeout(later, wait);
+          }
+          if (callNow) {
+            const callContext = storedContext;
+            const callArguments = storedArguments;
+            storedContext = void 0;
+            storedArguments = void 0;
+            result = function_.apply(callContext, callArguments);
+          }
+          return result;
+        }, "debounced");
+        debounced.clear = () => {
+          if (!timeoutId) {
+            return;
+          }
+          clearTimeout(timeoutId);
+          timeoutId = void 0;
+        };
+        debounced.flush = () => {
+          if (!timeoutId) {
+            return;
+          }
+          const callContext = storedContext;
+          const callArguments = storedArguments;
+          storedContext = void 0;
+          storedArguments = void 0;
+          result = function_.apply(callContext, callArguments);
+          clearTimeout(timeoutId);
+          timeoutId = void 0;
+        };
+        return debounced;
+      }
+      __name(debounce4, "debounce");
+      module.exports.debounce = debounce4;
+      module.exports = debounce4;
     }
   });
 
@@ -8884,6 +8986,40 @@
     }
   };
 
+  // app/javascript/controllers/relation_search_controller.js
+  var import_debounce = __toESM(require_debounce());
+  var RelationSearchController = class extends Controller {
+    static {
+      __name(this, "RelationSearchController");
+    }
+    static targets = ["field", "visibleField", "results"];
+    static values = { model: String };
+    connect() {
+      this.debouncedFetchData = (0, import_debounce.default)(this.fetchData.bind(this), 500);
+    }
+    change(e) {
+      this.debouncedFetchData(e.target.value);
+    }
+    fetchData(text, update) {
+      fetch("/admin/relations?" + new URLSearchParams({ m: this.modelValue, q: text })).then((response) => response.text()).then((response) => this.display(response));
+    }
+    display(response) {
+      this.resultsTarget.innerHTML = response;
+      this.bindNewActions(this.resultsTarget);
+    }
+    bindNewActions(el) {
+      const actionElements = Array.from(el.querySelectorAll("[data-action]"));
+      const actions = actionElements.flatMap(this.parseAction.bind(this));
+      actions.forEach(this.bindAction.bind(this));
+    }
+    select(e) {
+      const item = e.currentTarget;
+      this.visibleFieldTarget.value = item.getAttribute("name");
+      this.fieldTarget.value = item.id;
+      this.resultsTarget.innerHTML = "";
+    }
+  };
+
   // app/javascript/controllers/slugonator_controller.js
   var SlugonatorController = class extends Controller {
     static {
@@ -8915,6 +9051,7 @@
   application.register(ClickableRowController);
   application.register(DatetimeSelectController);
   application.register(ImagePreviewController);
+  application.register(RelationSearchController);
   application.register(SlugonatorController);
   application.register(SelectAllController);
   application.start();
