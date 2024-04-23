@@ -20,8 +20,12 @@ module UI
       render EnumFieldComponent.new(form: @form, name:)
     end
 
-    def text_field(name, *)
-      render TextFieldComponent.new(form: @form, name:)
+    def image_field(name, *)
+      render ImageFieldComponent.new(form: @form, name:)
+    end
+
+    def text_field(name, **)
+      render TextFieldComponent.new(form: @form, name:, **)
     end
   end
 end

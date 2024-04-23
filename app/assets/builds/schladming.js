@@ -8852,6 +8852,52 @@
     }
   };
 
+  // app/javascript/controllers/image_preview_controller.js
+  var ImagePreviewController = class extends Controller {
+    static {
+      __name(this, "ImagePreviewController");
+    }
+    static targets = ["container"];
+    preview(e) {
+      const file = e.currentTarget.files[0];
+      if (!file.type.startsWith("image/")) {
+        return;
+      }
+      const img = this.imageElement(file);
+      this.containerTarget.innerHTML = "";
+      this.containerTarget.appendChild(img);
+      this.generatePreview(file, img);
+    }
+    generatePreview(file, img) {
+      const reader = new FileReader();
+      reader.onload = /* @__PURE__ */ function(aImg) {
+        return function(e) {
+          aImg.src = e.target.result;
+        };
+      }(img);
+      reader.readAsDataURL(file);
+    }
+    imageElement(file) {
+      const img = document.createElement("img");
+      img.file = file;
+      return img;
+    }
+  };
+
+  // app/javascript/controllers/slugonator_controller.js
+  var SlugonatorController = class extends Controller {
+    static {
+      __name(this, "SlugonatorController");
+    }
+    static targets = ["slug"];
+    onChange(e) {
+      this.slugTarget.value = this.slugonate(e.target.value);
+    }
+    slugonate(str) {
+      return str.toLowerCase().normalize("NFD").replaceAll(/[\u0300-\u036f]/g, "").replaceAll(/[.,!@#$%^&*()]/g, "").replaceAll(" ", "-");
+    }
+  };
+
   // app/javascript/controllers/select_all_controller.js
   var SelectAllController = class extends Controller {
     static {
@@ -8868,6 +8914,8 @@
   application.register(AdminCleaveController);
   application.register(ClickableRowController);
   application.register(DatetimeSelectController);
+  application.register(ImagePreviewController);
+  application.register(SlugonatorController);
   application.register(SelectAllController);
   application.start();
 })();

@@ -749,6 +749,40 @@ select {
   --tw-contain-style:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .field_with_errors .fl {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
@@ -813,6 +847,10 @@ select {
 
 .hidden {
   display: none;
+}
+
+.h-\[180px\] {
+  height: 180px;
 }
 
 .min-h-\[100dvh\] {
@@ -1094,6 +1132,12 @@ select {
 
   .\@lg\:grow {
     flex-grow: 1;
+  }
+}
+
+@media (min-width: 640px) {
+  .sm\:max-w-\[300px\] {
+    max-width: 300px;
   }
 }
 

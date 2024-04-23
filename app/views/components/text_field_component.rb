@@ -1,15 +1,16 @@
 class TextFieldComponent< SchladmingComponent
   include UI::Classes
 
-  def initialize(form:, name:)
+  def initialize(form:, name:, **field_data)
     @form = form
     @name = name
+    @field_data = field_data
   end
 
   def view_template
     div(class: FIELD_CONTAINER) do
       @form.label(@name, class: FIELD_LABEL)
-      @form.text_field(@name, class: FIELD_INPUT)
+      @form.text_field(@name, class: FIELD_INPUT, **@field_data)
     end
   end
 end
