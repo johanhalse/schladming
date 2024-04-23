@@ -1,8 +1,10 @@
-// import "trix";
+import "trix";
 import "@hotwired/turbo-rails";
-// import "@rails/actiontext";
+import "@rails/actiontext";
 // import "chartkick/chart.js";
 import { Application } from "@johanhalse/musculus";
+
+window.Trix.config.blockAttributes.heading1.tagName = "h2";
 
 import AdminTabController from "./controllers/admin_tab_controller";
 import AdminCleaveController from "./controllers/admin_cleave_controller";

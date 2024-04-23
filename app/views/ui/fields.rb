@@ -28,8 +28,16 @@ module UI
       render RelationFieldComponent.new(form: @form, name:, model_name:, **)
     end
 
+    def text_area(name, **)
+      render TextAreaComponent.new(form: @form, name:, **)
+    end
+
     def text_field(name, **)
       render TextFieldComponent.new(form: @form, name:, **)
+    end
+
+    def trix_area(name, **)
+      render TrixComponent.new(form: @form, name:, **)
     end
   end
 end

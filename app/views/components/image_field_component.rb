@@ -16,7 +16,7 @@ class ImageFieldComponent< SchladmingComponent
   def filled_preview_field
     return if filename.blank?
 
-    @form.label(@name, class: "cursor-pointer") do
+    @form.label(@name, class: "grow cursor-pointer") do
       img(src: strat_url(filename), alt: "")
     end
   end
@@ -33,11 +33,13 @@ class ImageFieldComponent< SchladmingComponent
     image_preview_controller(class: FIELD_CONTAINER) do
       @form.label(@name, class: FIELD_LABEL)
 
-      div(class: "sm:max-w-[300px] mb-2", data: { image_preview_target: "container" }) do
-        filled_preview_field
-        empty_preview_field
+      div(class: "w-2/3 max-w-sm") do
+        div(class: "flex", data: { image_preview_target: "container" }) do
+          filled_preview_field
+          empty_preview_field
+        end
+        @form.file_field(@name, class: "shrink", data: { action: "change->image-preview#preview" })
       end
-      @form.file_field(@name, data: { action: "change->image-preview#preview" })
     end
   end
 end

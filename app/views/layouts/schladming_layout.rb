@@ -33,7 +33,7 @@ class SchladmingLayout < SchladmingView
         title { "Bidders Highway - #{helpers.controller_name} - #{helpers.params[:id]}" }
         csrf_meta_tags
         csp_meta_tag
-        stylesheet_link_tag("schladming-tailwind", "inter-font", "flatpickr.min", "data-turbo-track": "reload")
+        stylesheet_link_tag("schladming-tailwind", "inter-font", "flatpickr.min", "trix", "data-turbo-track": "reload")
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
       end
 
