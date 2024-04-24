@@ -8,6 +8,10 @@ module UI
       render PanelComponent.new(name:, &block)
     end
 
+    def boolean_field(name, **)
+      render BooleanFieldComponent.new(form: @form, name:, **)
+    end
+
     def cash_field(name, *)
       render CashFieldComponent.new(form: @form, name:)
     end
