@@ -9,7 +9,7 @@ module UI
     FIELD_LABEL = %w[block font-medium text-sm mb-0.5 @lg:mb-0 @lg:w-36 fl]
     LINK = %w[text-cyan-700 hover:text-cyan-500 transition-colors]
     PILL_BUTTON = %w[inline-block text-white bg-orange-500 hover:bg-orange-600 px-2 py-0.5 transition-colors]
-    TAB = %w[block px-2 py-1 transition-colors]
+    TAB = %w[block text-sm px-2 py-1 transition-colors]
     TAB_NEUTRAL = %w[bg-neutral-200 hover:bg-neutral-300]
     TAB_SELECTED = %w[bg-cyan-200]
   end

@@ -36,6 +36,10 @@ module UI
       render RelationListingComponent.new(resources:, fields:, link:)
     end
 
+    def select_field(name, options, translate:, **)
+      render SelectFieldComponent.new(form: @form, name:, options:, translate:, **)
+    end
+
     def text_area(name, **)
       render TextAreaComponent.new(form: @form, name:, **)
     end

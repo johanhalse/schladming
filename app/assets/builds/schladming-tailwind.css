@@ -845,6 +845,10 @@ select {
   margin-top: 1.5rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -867,6 +871,10 @@ select {
 
 .h-\[180px\] {
   height: 180px;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .max-h-24 {
@@ -907,6 +915,14 @@ select {
 
 .max-w-sm {
   max-width: 24rem;
+}
+
+.max-w-12 {
+  max-width: 3rem;
+}
+
+.max-w-md {
+  max-width: 28rem;
 }
 
 .shrink {
@@ -971,12 +987,24 @@ select {
   align-self: flex-start;
 }
 
+.self-end {
+  align-self: flex-end;
+}
+
+.justify-self-end {
+  justify-self: end;
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
 
 .border {
   border-width: 1px;
+}
+
+.border-0 {
+  border-width: 0px;
 }
 
 .border-t {

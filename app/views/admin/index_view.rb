@@ -109,6 +109,7 @@ module Admin
     def view_template
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model.name.downcase.to_sym], class: BUTTON_PRIMARY)
+        render SearchBarComponent.new(query: helpers.params[:q])
       end
       h1(class: H1) { @resources.model_name.human(count: 2) }
       scopes

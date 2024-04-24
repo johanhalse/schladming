@@ -106,6 +106,17 @@ module Schladming
       all.order(prop => direction)
     end
 
+    def with_search(all)
+      return all if params[:q].blank?
+
+      props = Schladming.searchable_properties & resource_class.column_names
+
+      join_query = props.map do |prop|
+        "#{prop} ILIKE ?"
+      end.join(" OR ")
+      all.where(join_query, *props.map { "%#{params[:q]}%" })
+    end
+
     def count
       with_scope(resource_class.all).count
     end
@@ -113,7 +124,9 @@ module Schladming
     def resources
       with_pagination(
         with_sorting(
-          with_scope(resource_class.all)
+          with_search(
+            with_scope(resource_class.all)
+          )
         )
       )
     end
