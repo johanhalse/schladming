@@ -1147,6 +1147,14 @@ select {
   padding-left: 0px;
 }
 
+.last\:text-right:last-child {
+  text-align: right;
+}
+
+.only\:table-row:only-child {
+  display: table-row;
+}
+
 .only\:w-full:only-child {
   width: 100%;
 }
@@ -1201,6 +1209,10 @@ select {
 
   .\@lg\:w-auto {
     width: auto;
+  }
+
+  .\@lg\:w-36 {
+    width: 9rem;
   }
 
   .\@lg\:grow {

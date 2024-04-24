@@ -32,6 +32,10 @@ module UI
       render RelationFieldComponent.new(form: @form, name:, model_name:, **)
     end
 
+    def relation_listing(resources, fields, link = false)
+      render RelationListingComponent.new(resources:, fields:, link:)
+    end
+
     def text_area(name, **)
       render TextAreaComponent.new(form: @form, name:, **)
     end
