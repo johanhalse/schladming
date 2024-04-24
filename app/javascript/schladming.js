@@ -12,6 +12,7 @@ import ClickableRowController from "./controllers/clickable_row_controller";
 import DatetimeSelectController from "./controllers/datetime_select_controller";
 import ImagePreviewController from "./controllers/image_preview_controller";
 import RelationSearchController from "./controllers/relation_search_controller";
+import RichTextEditorController from "./controllers/rich_text_editor_controller";
 import SlugonatorController from "./controllers/slugonator_controller";
 import SelectAllController from "./controllers/select_all_controller";
 
@@ -21,6 +22,7 @@ Application.register(ClickableRowController);
 Application.register(DatetimeSelectController);
 Application.register(ImagePreviewController);
 Application.register(RelationSearchController);
+Application.register(RichTextEditorController);
 Application.register(SlugonatorController);
 Application.register(SelectAllController);
 Application.start();

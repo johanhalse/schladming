@@ -35,6 +35,7 @@ class SchladmingLayout < SchladmingView
         csp_meta_tag
         stylesheet_link_tag("schladming-tailwind", "inter-font", "flatpickr.min", "trix", "data-turbo-track": "reload")
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
+        link(rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css")
       end
 
       body(lang: I18n.locale) do

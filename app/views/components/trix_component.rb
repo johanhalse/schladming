@@ -1,6 +1,8 @@
 class TrixComponent< SchladmingComponent
   include UI::Classes
 
+  register_element :rich_text_editor_controller
+
   def initialize(form:, name:, **field_data)
     @form = form
     @name = name
@@ -9,8 +11,11 @@ class TrixComponent< SchladmingComponent
 
   def view_template
     div(class: FIELD_CONTAINER) do
-      @form.label(@name, class: FIELD_LABEL)
-      @form.rich_text_area(@name)
+      @form.label(@name, class: FIELD_LABEL + %w[self-start])
+      rich_text_editor_controller(class: "shrink-[100] w-full") do
+        div(class: "quill") { unsafe_raw(@form.object.send(@name).to_s) }
+        @form.text_area(@name, class: "hidden", data: { rich_text_editor_target: "field" })
+      end
     end
   end
 end

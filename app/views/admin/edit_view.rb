@@ -39,7 +39,7 @@ module Admin
           link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4])
           h1(class: H1) { name }
 
-          ul(id: "tabs", class: "flex gap-1 hidden")
+          ul(id: "tabs", class: "flex flex-wrap gap-1 hidden")
           div(class: "lg:flex gap-4") do
             div(class: "lg:w-2/3 only:w-full @container") { main_area }
             if respond_to?(:sidebar)
