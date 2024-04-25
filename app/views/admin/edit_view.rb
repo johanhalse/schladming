@@ -25,15 +25,22 @@ module Admin
       [@resource.model_name.human, @resource.to_s].compact.join(": ")
     end
 
+    def delete_link
+      link_to(
+        [:admin, @resource],
+        data: { turbo_method: "delete", turbo_confirm: I18n.t("admin.confirm_delete", resource: @resource) },
+        class: BUTTON_ALERT) do
+          "Ta bort"
+        end
+    end
+
     def view_template
       form_for([:admin, @resource], multipart: true, html: { class: "submit-form" }) do |f|
         @form = f
         render TopBarComponent.new do
           f.submit(class: BUTTON_PRIMARY)
           top_bar_buttons if respond_to?(:top_bar_buttons)
-          if @resource.persisted?
-            link_to([:admin, @resource], data: { turbo_method: "delete" }, class: BUTTON_ALERT) { "Destroy" }
-          end
+          delete_link if @resource.persisted?
         end
         div(class: "px-4 md:pl-0") do
           link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4])

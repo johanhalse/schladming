@@ -31,7 +31,7 @@ module Admin
       when :enum
         translated_enum(resource, column, val)
       else
-        val.to_s
+        val&.to_s&.truncate(40)
       end
     end
 
@@ -108,7 +108,7 @@ module Admin
 
     def view_template
       render TopBarComponent.new do
-        link_to("Ny", [:new, :admin, @resources.model.name.downcase.to_sym], class: BUTTON_PRIMARY)
+        link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
         render SearchBarComponent.new(query: helpers.params[:q])
       end
       h1(class: H1) { @resources.model_name.human(count: 2) }
