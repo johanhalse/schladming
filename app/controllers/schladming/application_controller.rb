@@ -1,8 +1,7 @@
 module Schladming
   class ApplicationController < ActionController::Base
     include Devise::Controllers::Helpers
-
-    PAGINATION_LIMIT = 25
+    include Pagy::Backend
 
     layout -> { SchladmingLayout }
     class NoSuchScopeError < StandardError; end
@@ -12,7 +11,8 @@ module Schladming
     def index
       @columns = []
       @scopes = []
-      render Admin::IndexView.new(columns:, scopes:, resources:, count:)
+      pagy, resources = pagy(filtered_resources, items: 25)
+      render Admin::IndexView.new(columns:, scopes:, resources:, pagy:)
     end
 
     def edit
@@ -108,10 +108,6 @@ module Schladming
       all.send(params[:scope])
     end
 
-    def with_pagination(all)
-      all.offset(page).limit(PAGINATION_LIMIT)
-    end
-
     def with_sorting(all)
       return all if params[:sort].blank?
       prop = params[:sort]
@@ -135,12 +131,10 @@ module Schladming
       with_search(with_scope(resource_class.all)).count
     end
 
-    def resources
-      with_pagination(
-        with_sorting(
-          with_search(
-            with_scope(resource_class.all)
-          )
+    def filtered_resources
+      with_sorting(
+        with_search(
+          with_scope(resource_class.all)
         )
       )
     end

@@ -9,11 +9,11 @@ module Admin
     register_element :clickable_row_controller
     register_element :select_all_controller
 
-    def initialize(resources:, columns:, scopes:, count:)
+    def initialize(resources:, columns:, scopes:, pagy:)
       @resources = resources
       @columns = columns
       @scopes = scopes
-      @count = count
+      @pagy = pagy
     end
 
     def format_column(resource, column, as)
@@ -139,7 +139,7 @@ module Admin
           end
         end
 
-        div { @count }
+        render PraginationComponent.new(pagy: @pagy, url: helpers.request.original_url)
       end
     end
   end
