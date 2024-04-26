@@ -16014,6 +16014,20 @@
     }
   };
 
+  // app/javascript/controllers/hamburger_menu_controller.js
+  var HamburgerMenuController = class extends Controller {
+    static {
+      __name(this, "HamburgerMenuController");
+    }
+    connect() {
+      this.classList.add("cursor-pointer");
+    }
+    toggle(e2) {
+      document.getElementById("left-menu").classList.toggle("-translate-x-full");
+      document.getElementById("main").classList.toggle("blur-sm");
+    }
+  };
+
   // node_modules/flatpickr/dist/esm/types/options.js
   var HOOKS = [
     "onChange",
@@ -27841,6 +27855,7 @@ ${escapeText(this.code(index, length))}
   application.register(AdminTabController);
   application.register(AdminCleaveController);
   application.register(ClickableRowController);
+  application.register(HamburgerMenuController);
   application.register(DatetimeSelectController);
   application.register(ImagePreviewController);
   application.register(RelationSearchController);

@@ -24,6 +24,10 @@ module UI
       render EnumFieldComponent.new(form: @form, name:)
     end
 
+    def file_field(name, **)
+      render FileFieldComponent.new(form: @form, name:, **)
+    end
+
     def image_field(name, *)
       render ImageFieldComponent.new(form: @form, name:)
     end
@@ -36,7 +40,7 @@ module UI
       render RelationListingComponent.new(resources:, fields:, link:)
     end
 
-    def select_field(name, options, translate:, **)
+    def select_field(name, options, translate: false, **)
       render SelectFieldComponent.new(form: @form, name:, options:, translate:, **)
     end
 

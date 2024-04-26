@@ -1,9 +1,13 @@
 module Schladming
   class ApplicationController < ActionController::Base
+    include Devise::Controllers::Helpers
+
     PAGINATION_LIMIT = 25
 
     layout -> { SchladmingLayout }
     class NoSuchScopeError < StandardError; end
+
+    helper_method :current_user
 
     def index
       @columns = []
@@ -61,6 +65,12 @@ module Schladming
 
     def scopes
       @scopes
+    end
+
+    def current_user
+      raise ActiveRecord::RecordNotFound if current_login.blank?
+
+      @current_user ||= User.preload(:notifications, :seller_auctions).where(login: current_login).first
     end
 
     private
