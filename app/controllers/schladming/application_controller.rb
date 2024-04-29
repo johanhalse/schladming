@@ -2,26 +2,30 @@ module Schladming
   class ApplicationController < ActionController::Base
     include Devise::Controllers::Helpers
     include Pagy::Backend
+    include Pundit::Authorization
 
     layout -> { SchladmingLayout }
     class NoSuchScopeError < StandardError; end
 
+    after_action :verify_authorized
     helper_method :current_user
 
     def index
       @columns = []
-      @scopes = []
       pagy, resources = pagy(filtered_resources, items: 25)
+      authorize resources, policy_class: Admin::ApplicationPolicy
       render Admin::IndexView.new(columns:, scopes:, resources:, pagy:)
     end
 
     def edit
       resource = find(params[:id])
+      authorize resource, policy_class: Admin::ApplicationPolicy
       render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:)
     end
 
     def update
       resource = find(params[:id])
+      authorize resource, policy_class: Admin::ApplicationPolicy
 
       if resource.update(permitted_params)
         after_update if respond_to?(:after_update)
@@ -34,11 +38,13 @@ module Schladming
 
     def new
       resource = resource_class.new
+      authorize resource, policy_class: Admin::ApplicationPolicy
       render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:)
     end
 
     def create
       resource = resource_class.new(permitted_params)
+      authorize resource, policy_class: Admin::ApplicationPolicy
 
       if resource.save
         after_create if respond_to?(:after_create)
@@ -51,6 +57,8 @@ module Schladming
 
     def destroy
       resource = find(params[:id])
+      authorize resource, policy_class: Admin::ApplicationPolicy
+
       if resource.destroy
         redirect_to [:admin, resource.model_name.plural.to_sym], notice: t(".successful")
       else
@@ -60,7 +68,7 @@ module Schladming
     end
 
     def scopes
-      @scopes
+      []
     end
 
     def current_user
@@ -92,14 +100,9 @@ module Schladming
       @columns
     end
 
-    def scope(name)
-      @scopes << name
-      @scopes
-    end
-
     def with_scope(all)
       return all if params[:scope].blank?
-      raise NoSuchScopeError if @scopes.exclude?(params[:scope].to_sym)
+      raise NoSuchScopeError if scopes.exclude?(params[:scope].to_sym)
 
       all.send(params[:scope])
     end

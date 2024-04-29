@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "pagy", ">= 8.2.0"
   spec.add_dependency "phlex-rails", ">= 1.1.0"
+  spec.add_dependency "pundit", ">= 2.3.0"
   spec.add_dependency "qasa-url", ">= 0.1.0"
   spec.add_dependency "rails", ">= 7.1.0"
   spec.add_dependency "tailwindcss-rails", ">= 2.4.0"
