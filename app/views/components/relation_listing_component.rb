@@ -17,15 +17,25 @@ class RelationListingComponent < ApplicationComponent
   def view_template
     clickable_row_controller(class: "w-full") do
       table(class: "w-full") do
-        @resources.each do |resource|
-          tr(class: "transition-colors", data: data(resource)) do
+        thead do
+          tr do
             @fields.each do |field|
-              td(class: "p-2 last:text-right") { resource.send(field).to_s }
+              next th(class: "text-left px-2 last:text-right") { "Namn" } if field == :to_s
+              th(class: "text-left px-2 last:text-right") { @resources.model.human_attribute_name(field) }
             end
           end
         end
-        tr(class: "hidden only:table-row") do
-          td(class: "p-2") { "Finns inget att lista." }
+        tbody do
+          @resources.each do |resource|
+            tr(class: "transition-colors", data: data(resource)) do
+              @fields.each do |field|
+                td(class: "p-2 text-left last:text-right") { resource.send(field).to_s }
+              end
+            end
+          end
+          tr(class: "hidden only:table-row") do
+            td(class: "p-2") { "Finns inget att lista." }
+          end
         end
       end
     end

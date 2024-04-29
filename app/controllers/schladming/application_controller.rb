@@ -59,10 +59,6 @@ module Schladming
       end
     end
 
-    def find_by
-      "id"
-    end
-
     def scopes
       @scopes
     end
@@ -76,7 +72,7 @@ module Schladming
     private
 
     def find(id)
-      resource_class.find_by!(find_by => id)
+      resource_class.find(id)
     end
 
     def permitted_params

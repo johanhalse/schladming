@@ -1,4 +1,5 @@
 class ImageFieldComponent< SchladmingComponent
+  include Phlex::Rails::Helpers::T
   include UI::Classes
   include UI::Images
 

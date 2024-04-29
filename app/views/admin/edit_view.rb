@@ -1,3 +1,4 @@
+# shrink text-neutral-500
 module Admin
   class EditView < SchladmingView
     include Phlex::Rails::Helpers::LinkTo

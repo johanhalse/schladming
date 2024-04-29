@@ -16,7 +16,7 @@ class RelationFieldComponent< SchladmingComponent
   end
 
   def results
-    div(class:"absolute top-full left-0 bg-white", data: { relation_search_target: "results" })
+    div(class:"absolute top-full left-0 bg-white z-10", data: { relation_search_target: "results" })
   end
 
   def view_template

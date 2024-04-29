@@ -12,8 +12,8 @@ module UI
       render BooleanFieldComponent.new(form: @form, name:, **)
     end
 
-    def cash_field(name, *)
-      render CashFieldComponent.new(form: @form, name:)
+    def cash_field(name, **)
+      render CashFieldComponent.new(form: @form, name:, **)
     end
 
     def datetime_field(name, *)
