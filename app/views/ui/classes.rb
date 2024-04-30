@@ -1,9 +1,11 @@
 module UI
   module Classes
     H1 = %w[block mt-6 mb-4 text-2xl font-light]
-    BUTTON_ALERT = %w[p-3 cursor-pointer text-white bg-red-600 hover:bg-red-700 transition-colors]
-    BUTTON_PRIMARY = %w[p-3 cursor-pointer text-white bg-orange-500 hover:bg-orange-600 transition-colors]
-    BUTTON_SECONDARY = %w[p-3 cursor-pointer bg-lime-400 hover:bg-lime-500 transition-colors]
+    BUTTON = %w[p-3 cursor-pointer transition-colors]
+    BUTTON_ALERT = BUTTON + %w[text-white bg-red-600 hover:bg-red-700]
+    BUTTON_PRIMARY = BUTTON + %w[text-white bg-orange-500 hover:bg-orange-600]
+    BUTTON_SECONDARY = BUTTON + %w[text-white bg-teal-500 hover:bg-teal-600]
+    BUTTON_TERTIARY = BUTTON + %w[text-white bg-indigo-500 hover:bg-indigo-600]
     FIELD_CONTAINER = %w[w-full @lg:flex gap-2 items-center mt-2 first:mt-0 fc]
     FIELD_INPUT = %w[block w-full @lg:w-auto @lg:grow text-neutral-600 rounded border-neutral-300 fi]
     FIELD_LABEL = %w[block font-medium text-sm mb-0.5 @lg:mb-0 @lg:w-36 fl]
