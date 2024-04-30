@@ -46,6 +46,7 @@ module Schladming
     def create
       resource = resource_class.new(permitted_params)
       authorize resource, policy_class: Admin::ApplicationPolicy
+      before_create(resource) if respond_to?(:before_create)
 
       if resource.save
         after_create(resource) if respond_to?(:after_create)
