@@ -45,6 +45,7 @@ module Admin
           top_bar_buttons if respond_to?(:top_bar_buttons)
           delete_link if @resource.persisted?
         end
+        render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
           link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4])
           h1(class: H1) { name }
