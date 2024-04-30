@@ -1,4 +1,6 @@
-# shrink text-neutral-500
+# shrink text-neutral-500 text-right cursor-pointer text-red-800 hover:text-red-600 rounded-full hover:bg-red-200
+# transition-colors text-xl absolute top-3 right-2 md:w-auto peer hidden peer-checked:hidden md:w-[200px] md:pr-2
+# bg-neutral-100 rounded relative py-2 cursor-move js-handle block text-xl p-2 text-sm flex gap-2 items-center
 module Admin
   class EditView < SchladmingView
     include Phlex::Rails::Helpers::LinkTo

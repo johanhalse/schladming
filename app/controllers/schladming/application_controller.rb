@@ -28,7 +28,7 @@ module Schladming
       authorize resource, policy_class: Admin::ApplicationPolicy
 
       if resource.update(permitted_params)
-        after_update if respond_to?(:after_update)
+        after_update(resource) if respond_to?(:after_update)
         redirect_to [:edit, :admin, resource], notice: t("admin.update.successful", resource:)
       else
         flash.now[:alert] = t("admin.update.unsuccessful", resource:)
@@ -39,6 +39,7 @@ module Schladming
     def new
       resource = resource_class.new
       authorize resource, policy_class: Admin::ApplicationPolicy
+      before_new(resource) if respond_to?(:before_new)
       render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:)
     end
 
@@ -47,7 +48,7 @@ module Schladming
       authorize resource, policy_class: Admin::ApplicationPolicy
 
       if resource.save
-        after_create if respond_to?(:after_create)
+        after_create(resource) if respond_to?(:after_create)
         redirect_to [:edit, :admin, resource], notice: t("admin.create.successful", resource:)
       else
         flash.now[:alert] = t("admin.create.unsuccessful", resource_name: resource_class.model_name.human)
