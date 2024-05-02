@@ -18,7 +18,7 @@ module Admin
 
     def format_column(resource, column, as)
       val = resource.send(column)
-      return if val.nil?
+      return if val.blank?
       return as.call(val) if as.is_a?(Proc)
 
       case as
