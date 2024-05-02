@@ -51,9 +51,9 @@ module Admin
             format_column(resource, column.first, column.last)
           end
         end
-        td(class: "px-2 py-1 last:pr-0 flex gap-2 justify-end") do
-          link_to("Visa", [:admin, resource], class: PILL_BUTTON)
-        end
+        # td(class: "px-2 py-1 last:pr-0 flex gap-2 justify-end") do
+        #   link_to("Visa", [:admin, resource], class: PILL_BUTTON)
+        # end
       end
     end
 
@@ -124,7 +124,10 @@ module Admin
                   end
                   @columns.each do |column|
                     th(class: "px-2 py-1 text-left first:pl-0") do
-                      a(href: sort_url(column.first)) { @resources.model.human_attribute_name(column.first) }
+                      a(href: sort_url(column.first)) do
+                        next "Namn" if column.first == :to_s
+                        @resources.model.human_attribute_name(column.first)
+                      end
                     end
                   end
                   th(class: "px-2 py-1") { whitespace }
