@@ -18,6 +18,7 @@ module Admin
 
     def format_column(resource, column, as)
       val = resource.send(column)
+      puts "Blankness of resource: #{val.inspect}"
       return if val.blank?
       return as.call(val) if as.is_a?(Proc)
 
