@@ -27,7 +27,7 @@ module Admin
       when :image
         img(src: strat_url(val), alt: "", width: "30")
       when :resource
-        link_to(val || "-", [:edit, :admin, val], class: LINK)
+        link_to(val.to_s || "-", [:edit, :admin, val], class: LINK)
       when :enum
         translated_enum(resource, column, val)
       else
