@@ -48,7 +48,7 @@ module Admin
         td(class: "pl-2 w-0") { check_box(resource) } if multi_actions?
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do
-            format_column(resource, column.first, column.last)
+            format_column(resource, column.first, column.second)
           end
         end
         # td(class: "px-2 py-1 last:pr-0 flex gap-2 justify-end") do
@@ -96,13 +96,13 @@ module Admin
       end
     end
 
-    def sort_url(prop)
+    def sort_url(sort_key)
       current_url = URL.parse(helpers.request.original_url)
       if current_url.query["sort"].nil?
-        current_url.merge(sort: prop, direction: "desc")
+        current_url.merge(sort: sort_key, direction: "desc")
       else
         reverse_direction = current_url.query["direction"] == "desc" ? "asc" : "desc"
-        current_url.merge(sort: prop, direction: reverse_direction)
+        current_url.merge(sort: sort_key, direction: reverse_direction)
       end
     end
 
@@ -124,7 +124,7 @@ module Admin
                   end
                   @columns.each do |column|
                     th(class: "px-2 py-1 text-left first:pl-0") do
-                      a(href: sort_url(column.first)) do
+                      a(href: sort_url(column.last)) do
                         next "Namn" if column.first == :to_s
                         @resources.model.human_attribute_name(column.first)
                       end

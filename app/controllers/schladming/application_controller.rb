@@ -12,9 +12,10 @@ module Schladming
 
     def index
       @columns = []
+      @columns = columns
       pagy, resources = pagy(filtered_resources, items: 25)
       authorize resources, policy_class: Admin::ApplicationPolicy
-      render Admin::IndexView.new(columns:, scopes:, resources:, pagy:)
+      render Admin::IndexView.new(columns: @columns, scopes:, resources:, pagy:)
     end
 
     def edit
@@ -97,8 +98,8 @@ module Schladming
       resource_name.constantize
     end
 
-    def column(name, as:)
-      @columns << [name, as]
+    def column(name, as:, sort_key: nil)
+      @columns << [name, as, sort_key || name]
       @columns
     end
 
@@ -114,7 +115,12 @@ module Schladming
       prop = params[:sort]
       direction = params[:direction]
 
-      all.order(prop => direction)
+      if params[:sort].include?("/")
+        table, prop = prop.split("/")
+        all.joins(table.to_sym).order(prop => direction)
+      else
+        all.order(prop => direction)
+      end
     end
 
     def with_search(all)
