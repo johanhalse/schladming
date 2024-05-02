@@ -18,7 +18,6 @@ module Admin
 
     def format_column(resource, column, as)
       val = resource.send(column)
-      puts "Blankness of resource: #{val.inspect}"
       return if val.blank?
       return as.call(val) if as.is_a?(Proc)
 
@@ -28,9 +27,7 @@ module Admin
       when :image
         img(src: strat_url(val), alt: "", width: "30")
       when :resource
-        puts "Link to: #{val}"
-        puts "*" * 30
-        link_to(val, [:edit, :admin, val], class: LINK)
+        link_to(val || "-", [:edit, :admin, val], class: LINK)
       when :enum
         translated_enum(resource, column, val)
       else
@@ -51,8 +48,6 @@ module Admin
         td(class: "pl-2 w-0") { check_box(resource) } if multi_actions?
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do
-            puts "Format column: #{resource}, #{column.first}, #{column.last}"
-            puts "*" * 30
             format_column(resource, column.first, column.last)
           end
         end
