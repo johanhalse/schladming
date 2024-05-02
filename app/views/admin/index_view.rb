@@ -44,7 +44,7 @@ module Admin
     end
 
     def resource_row(resource)
-      tr(class: "transition-colors", data: { action: "clickable-row#click", link: url_for([:edit, :admin, resource]) }) do
+      tr(class: "transition-colors even:bg-neutral-150", data: { action: "clickable-row#click", link: url_for([:edit, :admin, resource]) }) do
         td(class: "pl-2 w-0") { check_box(resource) } if multi_actions?
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do

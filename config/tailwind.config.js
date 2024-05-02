@@ -13,6 +13,9 @@ module.exports = {
       colors: {
         jaffa: "#f1821b",
         racing: "#0c3923",
+        neutral: {
+          150: "#efefef"
+        }
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
