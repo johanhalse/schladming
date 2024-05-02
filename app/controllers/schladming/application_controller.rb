@@ -110,7 +110,7 @@ module Schladming
     end
 
     def with_sorting(all)
-      return all if params[:sort].blank?
+      return all.order(created_at: "desc") if params[:sort].blank?
       prop = params[:sort]
       direction = params[:direction]
 
