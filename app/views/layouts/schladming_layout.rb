@@ -28,12 +28,16 @@ class SchladmingLayout < SchladmingView
     end.uniq.compact_blank.select { _1.start_with?("admin/") }.map { _1.split("/").last }
   end
 
+  def translated_controller
+    I18n.t("activerecord.models.#{helpers.controller_name.singularize}.other")
+  end
+
   def view_template(&block)
     doctype
 
     html(lang: I18n.locale) do
       head do
-        title { "Bidders Highway - #{helpers.controller_name} - #{helpers.params[:id]}" }
+        title { "Bidders Highway - #{translated_controller}" }
         csrf_meta_tags
         csp_meta_tag
         meta(http_equiv: "x-ua-compatible", content: "ie=edge")
