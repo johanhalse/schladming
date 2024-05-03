@@ -23,7 +23,7 @@ module Admin
 
       case as
       when :date
-        span(class: "whitespace-nowrap") { l(val, format: :short) }
+        span { l(val, format: :short) }
       when :image
         img(src: strat_url(val), alt: "", width: "30")
       when :resource
@@ -31,7 +31,7 @@ module Admin
       when :enum
         translated_enum(resource, column, val)
       else
-        span(class: "whitespace-nowrap") { val&.to_s&.truncate(40) }
+        span { val&.to_s&.truncate(40) }
       end
     end
 
@@ -106,6 +106,36 @@ module Admin
       end
     end
 
+    def listing
+      clickable_row_controller(class: "block w-full overflow-auto") do
+        select_all_controller(class: "block w-full") do
+          table(class: "w-full overflow-x-scroll text-mid whitespace-nowrap") do
+            thead do
+              tr do
+                if multi_actions?
+                  th(class: "pl-2 w-0") { input(type: "checkbox", data: { action: "change->select-all#change" }) }
+                end
+                @columns.each do |column|
+                  th(class: "px-2 py-1 text-left first:pl-0") do
+                    a(href: sort_url(column.last)) do
+                      next "Namn" if column.first == :to_s
+                      @resources.model.human_attribute_name(column.first)
+                    end
+                  end
+                end
+                th(class: "px-2 py-1") { whitespace }
+              end
+            end
+            tbody do
+              @resources.each do |resource|
+                resource_row(resource)
+              end
+            end
+          end
+        end
+      end
+    end
+
     def view_template
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
@@ -114,34 +144,7 @@ module Admin
       div(class: "p-4", id: "main") do
         h1(class: H1) { @resources.model_name.human(count: 2) }
         scopes
-        clickable_row_controller(class: "block w-full overflow-auto") do
-          select_all_controller(class: "block w-full") do
-            table(class: "w-full overflow-x-scroll text-mid") do
-              thead do
-                tr do
-                  if multi_actions?
-                    th(class: "pl-2 w-0") { input(type: "checkbox", data: { action: "change->select-all#change" }) }
-                  end
-                  @columns.each do |column|
-                    th(class: "px-2 py-1 text-left first:pl-0") do
-                      a(href: sort_url(column.last)) do
-                        next "Namn" if column.first == :to_s
-                        @resources.model.human_attribute_name(column.first)
-                      end
-                    end
-                  end
-                  th(class: "px-2 py-1") { whitespace }
-                end
-              end
-              tbody do
-                @resources.each do |resource|
-                  resource_row(resource)
-                end
-              end
-            end
-          end
-        end
-
+        listing
         render PraginationComponent.new(pagy: @pagy, url: helpers.request.original_url)
       end
     end
