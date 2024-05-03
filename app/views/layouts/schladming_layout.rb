@@ -10,22 +10,21 @@ class SchladmingLayout < SchladmingView
 
   def left_menu
     ul(class: LEFT_MENU_CLASS + ["min-w-[200px]"], id: "left-menu") do
-      comptrollers.each do |route|
+      Schladming.menu_items.each do |route|
         li do
-          link_to(route_name(route), [:admin, route.to_sym], class: "block w-full px-4 py-2 hover:text-neutral-300")
+          link_to(route_name(route), route_link(route), class: "block w-full px-4 py-2 hover:text-neutral-300")
         end
       end
     end
   end
 
-  def route_name(route)
-    t("activerecord.models.#{route.singularize}.other")
+  def route_link(route)
+    route.is_a?(Symbol) ? [:admin, route] : [:admin, route.keys.first, route.values.first]
   end
 
-  def comptrollers
-    Rails.application.routes.routes.map do |route|
-      route.defaults[:controller]
-    end.uniq.compact_blank.select { _1.start_with?("admin/") }.map { _1.split("/").last }
+  def route_name(route)
+    route_name = route.is_a?(Symbol) ? route : route.keys.first
+    t("activerecord.models.#{route_name.to_s.singularize}.other")
   end
 
   def translated_controller
