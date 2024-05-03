@@ -16009,8 +16009,13 @@
       if (e2.target.tagName == "A" || e2.target.tagName == "INPUT") {
         return true;
       }
-      e2.preventDefault();
-      window.Turbo.visit(e2.target.closest("tr").dataset["link"]);
+      const link = e2.target.closest("tr").dataset["link"];
+      if (e2.which == 2 || e2.which == 4 || e2.metaKey || e2.ctrlKey) {
+        window.open(link, "_blank");
+      } else {
+        e2.preventDefault();
+        window.Turbo.visit(link);
+      }
     }
   };
 

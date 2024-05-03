@@ -13,7 +13,14 @@ export default class ClickableRowController extends Controller {
     if (e.target.tagName == "A" || e.target.tagName == "INPUT") {
       return true;
     }
-    e.preventDefault();
-    window.Turbo.visit(e.target.closest("tr").dataset["link"])
+
+    const link = e.target.closest("tr").dataset["link"];
+    if (e.which == 2 || e.which == 4 || e.metaKey || e.ctrlKey) {
+      window.open(link, "_blank");
+    }
+    else {
+      e.preventDefault();
+      window.Turbo.visit(link)
+    }
   }
 }
