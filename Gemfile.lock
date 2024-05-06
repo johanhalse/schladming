@@ -2,7 +2,9 @@ PATH
   remote: .
   specs:
     schladming (0.1.0)
+      pagy (>= 8.2.0)
       phlex-rails (>= 1.1.0)
+      pundit (>= 2.3.0)
       qasa-url (>= 0.1.0)
       rails (>= 7.1.0)
       tailwindcss-rails (>= 2.4.0)
@@ -135,6 +137,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
+    pagy (8.3.0)
     phlex (1.10.1)
     phlex-rails (1.2.1)
       phlex (~> 1.10.0)
@@ -143,6 +146,8 @@ GEM
       stringio
     puma (6.4.2)
       nio4r (~> 2.0)
+    pundit (2.3.1)
+      activesupport (>= 3.0.0)
     qasa-url (0.1.0)
       rack (>= 2.0, < 4.0)
     racc (1.7.3)

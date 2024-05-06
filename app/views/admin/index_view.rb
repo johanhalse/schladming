@@ -123,7 +123,7 @@ module Admin
                     end
                   end
                 end
-                th(class: "px-2 py-1") { whitespace }
+                # th(class: "px-2 py-1") { whitespace }
               end
             end
             tbody do
