@@ -1379,11 +1379,6 @@ select {
   border-bottom-left-radius: 0px;
 }
 
-.group:hover .group-hover\:bg-neutral-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
-}
-
 .group:hover .group-hover\:bg-neutral-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));

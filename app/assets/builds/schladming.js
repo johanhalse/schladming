@@ -15994,6 +15994,122 @@
     }
   };
 
+  // node_modules/js-cookie/dist/js.cookie.mjs
+  function assign(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2];
+      for (var key in source) {
+        target[key] = source[key];
+      }
+    }
+    return target;
+  }
+  __name(assign, "assign");
+  var defaultConverter = {
+    read: function(value) {
+      if (value[0] === '"') {
+        value = value.slice(1, -1);
+      }
+      return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+    },
+    write: function(value) {
+      return encodeURIComponent(value).replace(
+        /%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,
+        decodeURIComponent
+      );
+    }
+  };
+  function init(converter, defaultAttributes) {
+    function set(name, value, attributes) {
+      if (typeof document === "undefined") {
+        return;
+      }
+      attributes = assign({}, defaultAttributes, attributes);
+      if (typeof attributes.expires === "number") {
+        attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+      }
+      if (attributes.expires) {
+        attributes.expires = attributes.expires.toUTCString();
+      }
+      name = encodeURIComponent(name).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+      var stringifiedAttributes = "";
+      for (var attributeName in attributes) {
+        if (!attributes[attributeName]) {
+          continue;
+        }
+        stringifiedAttributes += "; " + attributeName;
+        if (attributes[attributeName] === true) {
+          continue;
+        }
+        stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
+      }
+      return document.cookie = name + "=" + converter.write(value, name) + stringifiedAttributes;
+    }
+    __name(set, "set");
+    function get(name) {
+      if (typeof document === "undefined" || arguments.length && !name) {
+        return;
+      }
+      var cookies = document.cookie ? document.cookie.split("; ") : [];
+      var jar = {};
+      for (var i2 = 0; i2 < cookies.length; i2++) {
+        var parts = cookies[i2].split("=");
+        var value = parts.slice(1).join("=");
+        try {
+          var found = decodeURIComponent(parts[0]);
+          jar[found] = converter.read(value, found);
+          if (name === found) {
+            break;
+          }
+        } catch (e2) {
+        }
+      }
+      return name ? jar[name] : jar;
+    }
+    __name(get, "get");
+    return Object.create(
+      {
+        set,
+        get,
+        remove: function(name, attributes) {
+          set(
+            name,
+            "",
+            assign({}, attributes, {
+              expires: -1
+            })
+          );
+        },
+        withAttributes: function(attributes) {
+          return init(this.converter, assign({}, this.attributes, attributes));
+        },
+        withConverter: function(converter2) {
+          return init(assign({}, this.converter, converter2), this.attributes);
+        }
+      },
+      {
+        attributes: { value: Object.freeze(defaultAttributes) },
+        converter: { value: Object.freeze(converter) }
+      }
+    );
+  }
+  __name(init, "init");
+  var api = init(defaultConverter, { path: "/" });
+
+  // app/javascript/controllers/back_to_scope_controller.js
+  var BackToScopeController = class extends Controller {
+    static {
+      __name(this, "BackToScopeController");
+    }
+    click(e2) {
+      const url = api.get("return_to_tab");
+      if (url) {
+        e2.preventDefault();
+        window.Turbo.visit(e2.target.href + "?scope=" + url);
+      }
+    }
+  };
+
   // app/javascript/controllers/clickable_row_controller.js
   var ClickableRowController = class extends Controller {
     static {
@@ -16659,7 +16775,7 @@
       };
     }
     __name(setupHelperFunctions, "setupHelperFunctions");
-    function init() {
+    function init2() {
       self2.element = self2.input = element;
       self2.isOpen = false;
       parseConfig();
@@ -16683,7 +16799,7 @@
       }
       triggerEvent("onReady");
     }
-    __name(init, "init");
+    __name(init2, "init");
     function getClosestActiveElement() {
       var _a;
       return ((_a = self2.calendarContainer) === null || _a === void 0 ? void 0 : _a.getRootNode()).activeElement || document.activeElement;
@@ -18388,7 +18504,7 @@
       }
     }
     __name(timeWrapper, "timeWrapper");
-    init();
+    init2();
     return self2;
   }
   __name(FlatpickrInstance, "FlatpickrInstance");
@@ -27859,6 +27975,7 @@ ${escapeText(this.code(index, length))}
   window.Trix.config.blockAttributes.heading1.tagName = "h2";
   application.register(AdminTabController);
   application.register(AdminCleaveController);
+  application.register(BackToScopeController);
   application.register(ClickableRowController);
   application.register(HamburgerMenuController);
   application.register(DatetimeSelectController);
@@ -27876,6 +27993,9 @@ ${escapeText(this.code(index, length))}
   Turbo 8.0.4
   Copyright © 2024 37signals LLC
    *)
+
+js-cookie/dist/js.cookie.mjs:
+  (*! js-cookie v3.0.5 | MIT *)
 
 lodash-es/lodash.js:
   (**

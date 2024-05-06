@@ -107,6 +107,7 @@ module Schladming
       return all if params[:scope].blank?
       raise NoSuchScopeError if scopes.exclude?(params[:scope].to_sym)
 
+      cookies[:return_to_tab] = params[:scope]
       all.send(params[:scope])
     end
 

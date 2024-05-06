@@ -10,6 +10,8 @@ module Admin
     include UI::Fields
     include UI::Classes
 
+    register_element :back_to_scope_controller
+
     def initialize(resource:, resource_name:, resource_class:)
       @resource = resource
       @resource_name = resource_name
@@ -49,7 +51,9 @@ module Admin
         end
         render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
-          link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4])
+          back_to_scope_controller do
+            link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4], data: { action: "back-to-scope#click" })
+          end
           h1(class: H1) { name }
 
           ul(id: "tabs", class: "flex flex-wrap gap-1 hidden")

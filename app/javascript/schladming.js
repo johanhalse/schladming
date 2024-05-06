@@ -8,6 +8,7 @@ window.Trix.config.blockAttributes.heading1.tagName = "h2";
 
 import AdminTabController from "./controllers/admin_tab_controller";
 import AdminCleaveController from "./controllers/admin_cleave_controller";
+import BackToScopeController from "./controllers/back_to_scope_controller";
 import ClickableRowController from "./controllers/clickable_row_controller";
 import DatetimeSelectController from "./controllers/hamburger_menu_controller";
 import HamburgerMenuController from "./controllers/datetime_select_controller";
@@ -19,6 +20,7 @@ import SelectAllController from "./controllers/select_all_controller";
 
 Application.register(AdminTabController);
 Application.register(AdminCleaveController);
+Application.register(BackToScopeController);
 Application.register(ClickableRowController);
 Application.register(DatetimeSelectController);
 Application.register(HamburgerMenuController);
