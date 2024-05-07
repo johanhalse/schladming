@@ -1,8 +1,3 @@
-# shrink text-neutral-500 text-right cursor-pointer text-red-800 hover:text-red-600 rounded-full hover:bg-red-200
-# transition-colors text-xl absolute top-3 right-2 md:w-auto peer hidden peer-checked:hidden md:w-[200px] md:pr-2
-# bg-neutral-100 rounded relative py-2 cursor-move js-handle block p-2 text-sm flex gap-2 items-center grid grid-cols-4
-# inline-block py-1 px-2 border border-neutral-300 group-hover:bg-neutral-100 group-hover:rounded-b-none hover:rounded-t
-# hover:border-b-transparent group-hover:block p-1 bg-neutral-200 border-t-0 top-full left-0 text-xs leading-loose z-30
 module Admin
   class EditView < SchladmingView
     include Phlex::Rails::Helpers::LinkTo
