@@ -4,6 +4,8 @@ module Schladming
     include Pagy::Backend
     include Pundit::Authorization
 
+    rescue_from Pundit::NotAuthorizedError, with: :not_allowed
+
     layout -> { SchladmingLayout }
     class NoSuchScopeError < StandardError; end
 
@@ -75,12 +77,17 @@ module Schladming
     end
 
     def current_user
-      raise ActiveRecord::RecordNotFound if current_login.blank?
+      return if current_login.blank?
 
       @current_user ||= User.preload(:notifications, :seller_auctions).where(login: current_login).first
     end
 
     private
+
+    def not_allowed
+      store_location_for(:login, request.fullpath)
+      redirect_to login_methods_path(locale: I18n.locale), alert: t("access_denied")
+    end
 
     def find(id)
       resource_class.find(id)

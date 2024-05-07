@@ -2,5 +2,5 @@ require "schladming/version"
 require "schladming/engine"
 
 module Schladming
-  mattr_accessor :searchable_models, :searchable_properties, :menu_items
+  mattr_accessor :menu_items, :searchable_models, :searchable_properties
 end
