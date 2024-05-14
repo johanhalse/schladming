@@ -1,5 +1,5 @@
 module Admin
-  class SearchView < ApplicationView
+  class SearchView < Phlex::HTML
     def initialize(resources:, model_class:)
       @resources = resources
       @model_class = model_class
