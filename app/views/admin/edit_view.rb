@@ -36,8 +36,14 @@ module Admin
         end
     end
 
+    def form_url
+      return [:admin, @resource] unless @resource.persisted?
+
+      [:admin, @resource.model_name.singular.to_sym, id: @resource.id]
+    end
+
     def view_template
-      form_for([:admin, @resource], url: [:admin, @resource.model_name.singular.to_sym, id: @resource.id], multipart: true, html: { class: "submit-form" }) do |f|
+      form_for([:admin, @resource], url: form_url, multipart: true, html: { class: "submit-form" }) do |f|
         @form = f
         render TopBarComponent.new do
           f.submit(class: BUTTON_PRIMARY)
