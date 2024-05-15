@@ -32,7 +32,7 @@ module Schladming
 
       if resource.update(permitted_params)
         after_update(resource) if respond_to?(:after_update)
-        redirect_to [:edit, :admin, resource], notice: t("admin.update.successful", resource:)
+        redirect_to edit_url(resource), notice: t("admin.update.successful", resource:)
       else
         flash.now[:alert] = t("admin.update.unsuccessful", resource:)
         render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:), status: :unprocessable_entity
@@ -53,7 +53,7 @@ module Schladming
 
       if resource.save
         after_create(resource) if respond_to?(:after_create)
-        redirect_to [:edit, :admin, resource], notice: t("admin.create.successful", resource:)
+        redirect_to edit_url(resource), notice: t("admin.create.successful", resource:)
       else
         flash.now[:alert] = t("admin.create.unsuccessful", resource_name: resource_class.model_name.human)
         render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:), status: :unprocessable_entity
@@ -70,6 +70,10 @@ module Schladming
         flash[:error] = t(".unsuccessful")
         render "admin/#{controller_name}/edit_view".camelize.constantize.new(resource:, resource_name:, resource_class:)
       end
+    end
+
+    def edit_url(resource)
+      [:edit, :admin, resource.model_name.singular.to_sym, id: resource.id]
     end
 
     def scopes
