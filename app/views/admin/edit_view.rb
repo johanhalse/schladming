@@ -46,8 +46,8 @@ module Admin
         end
         render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
-          back_to_scope_controller do
-            link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4], data: { action: "back-to-scope#click" })
+          back_to_scope_controller(data: { resource: @resource.model_name.singular }) do
+            link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4], data: { action: "back-to-scope#click", turbo_prefetch: "false" })
           end
           h1(class: H1) { name }
 

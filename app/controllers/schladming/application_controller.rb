@@ -111,10 +111,13 @@ module Schladming
     end
 
     def with_scope(all)
-      return all if params[:scope].blank?
+      if params[:scope].blank?
+        cookies.delete("return_to_#{controller_name.singularize}_tab")
+        return all
+      end
       raise NoSuchScopeError if scopes.exclude?(params[:scope].to_sym)
 
-      cookies[:return_to_tab] = params[:scope]
+      cookies["return_to_#{controller_name.singularize}_tab"] = params[:scope]
       all.send(params[:scope])
     end
 

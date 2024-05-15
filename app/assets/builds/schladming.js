@@ -16102,7 +16102,8 @@
       __name(this, "BackToScopeController");
     }
     click(e2) {
-      const url = api.get("return_to_tab");
+      const resource = this.dataset["resource"];
+      const url = api.get(`return_to_${resource}_tab`);
       if (url) {
         e2.preventDefault();
         window.Turbo.visit(e2.target.href + "?scope=" + url);
