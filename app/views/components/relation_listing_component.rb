@@ -11,7 +11,11 @@ class RelationListingComponent < ApplicationComponent
   end
 
   def data(resource)
-    { action: "clickable-row#click", link: url_for([:edit, :admin, resource]) } if @link
+    { action: "clickable-row#click", link: resource_url(resource) } if @link
+  end
+
+  def resource_url(resource)
+    url_for([:edit, :admin, resource.model_name.singular.to_sym, id: resource.id])
   end
 
   def rendered_resource(resource, field)

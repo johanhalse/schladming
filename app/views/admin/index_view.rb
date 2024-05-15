@@ -27,7 +27,7 @@ module Admin
       when :image
         img(src: strat_url(val), alt: "", width: "30")
       when :resource
-        link_to(val.to_s || "-", [:edit, :admin, val], class: LINK)
+        link_to(val.to_s || "-", resource_url(val), class: LINK)
       when :enum
         translated_enum(resource, column, val)
       else
@@ -43,8 +43,12 @@ module Admin
       false
     end
 
+    def resource_url(resource)
+      url_for([:edit, :admin, resource.model_name.singular.to_sym, id: resource.id])
+    end
+
     def resource_row(resource)
-      tr(class: "transition-colors even:bg-neutral-150", data: { action: "clickable-row#click", link: url_for([:edit, :admin, resource]) }) do
+      tr(class: "transition-colors even:bg-neutral-150", data: { action: "clickable-row#click", link: resource_url(resource) }) do
         td(class: "pl-2 w-0") { check_box(resource) } if multi_actions?
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do
