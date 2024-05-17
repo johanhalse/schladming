@@ -6,6 +6,7 @@ module UI
     BUTTON_PRIMARY = BUTTON + %w[text-white bg-orange-500 hover:bg-orange-600]
     BUTTON_SECONDARY = BUTTON + %w[text-white bg-teal-500 hover:bg-teal-600]
     BUTTON_TERTIARY = BUTTON + %w[text-white bg-indigo-500 hover:bg-indigo-600]
+    BUTTON_QUATERNARY = BUTTON + %w[text-white bg-fuchsia-500 hover:bg-fuchsia-600]
     FIELD_CONTAINER = %w[w-full @lg:flex gap-2 items-center mt-2 first:mt-0 fc]
     FIELD_INPUT = %w[block w-full @lg:w-auto @lg:grow text-neutral-600 rounded border-neutral-300 fi]
     FIELD_LABEL = %w[block font-medium text-sm mb-0.5 @lg:mb-0 @lg:w-36 fl]
