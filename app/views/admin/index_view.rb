@@ -6,13 +6,15 @@ module Admin
     include UI::Classes
     include UI::Images
 
+    register_element :batch_action_controller
     register_element :clickable_row_controller
     register_element :select_all_controller
 
-    def initialize(resources:, columns:, scopes:, pagy:)
+    def initialize(resources:, columns:, scopes:, multi_actions:, pagy:)
       @resources = resources
       @columns = columns
       @scopes = scopes
+      @multi_actions = multi_actions
       @pagy = pagy
     end
 
@@ -39,17 +41,13 @@ module Admin
       resource.class.human_attribute_name("#{column}.#{val}")
     end
 
-    def multi_actions?
-      false
-    end
-
     def resource_url(resource)
       url_for([:edit, :admin, resource.model_name.singular.to_sym, id: resource.id])
     end
 
     def resource_row(resource)
       tr(class: "transition-colors even:bg-neutral-150", data: { action: "clickable-row#click", link: resource_url(resource) }) do
-        td(class: "pl-2 w-0") { check_box(resource) } if multi_actions?
+        td(class: "pl-2 w-0") { check_box(resource) } if @multi_actions.present?
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do
             format_column(resource, column.first, column.second)
@@ -62,7 +60,16 @@ module Admin
     end
 
     def check_box(resource)
-      input(type: "checkbox", id: dom_id(resource), data: { select_all_target: "resource" })
+      input(
+        type: "checkbox",
+        id: dom_id(resource),
+        name: "ids[]",
+        value: resource.id,
+        data: {
+          action: "change->batch-action#checkbox",
+          select_all_target: "resource",
+          batch_action_target: "checkbox"
+        })
     end
 
     def scopes
@@ -116,8 +123,15 @@ module Admin
           table(class: "w-full overflow-x-scroll text-mid whitespace-nowrap") do
             thead do
               tr do
-                if multi_actions?
-                  th(class: "pl-2 w-0") { input(type: "checkbox", data: { action: "change->select-all#change" }) }
+                if @multi_actions.present?
+                  th(class: "pl-2 w-0") do
+                    input(
+                      type: "checkbox",
+                      data: {
+                        action: "change->select-all#change",
+                        batch_action_target: "all"
+                      })
+                  end
                 end
                 @columns.each do |column|
                   th(class: "px-2 py-1 text-left first:pl-0") do
@@ -140,6 +154,16 @@ module Admin
       end
     end
 
+    def multi_action_tabs
+      div(class: "flex gap-2 hidden", data: { batch_action_target: "actionbar" }) do
+        @multi_actions.each do |multi_action|
+          button(class: %w[text-sm bg-neutral-700 hover:bg-neutral-600 text-white p-2], name: "function", value: multi_action) do
+            @resources.model.human_attribute_name("multi_action.#{multi_action}")
+          end
+        end
+      end
+    end
+
     def view_template
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
@@ -148,7 +172,14 @@ module Admin
       div(class: "p-4", id: "main") do
         h1(class: H1) { @resources.model_name.human(count: 2) }
         scopes
-        listing
+        batch_action_controller(class: "flex gap-2") do
+          form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
+            input(type: "hidden", name: "scope", value: helpers.params[:scope])
+            input(type: "hidden", name: "page", value: helpers.params[:page])
+            multi_action_tabs if @multi_actions.present?
+            listing
+          end
+        end
         render PraginationComponent.new(pagy: @pagy, url: helpers.request.original_url)
       end
     end

@@ -1295,6 +1295,11 @@ select {
   background-color: rgb(13 148 136 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-neutral-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
+}
+
 .hover\:text-cyan-500:hover {
   --tw-text-opacity: 1;
   color: rgb(6 182 212 / var(--tw-text-opacity));

@@ -16111,6 +16111,32 @@
     }
   };
 
+  // app/javascript/controllers/batch_action_controller.js
+  var BatchActionController = class extends Controller {
+    static {
+      __name(this, "BatchActionController");
+    }
+    static targets = ["actionbar", "all", "checkbox"];
+    checkbox(e2) {
+      if (this.checkboxTargets.some(this.isChecked)) {
+        this.showActions();
+      } else {
+        this.hideActions();
+      }
+    }
+    isChecked(checkbox) {
+      return checkbox.checked;
+    }
+    showActions() {
+      this.actionbarTarget.classList.remove("hidden");
+      this.allTarget.checked = true;
+    }
+    hideActions() {
+      this.actionbarTarget.classList.add("hidden");
+      this.allTarget.checked = false;
+    }
+  };
+
   // app/javascript/controllers/clickable_row_controller.js
   var ClickableRowController = class extends Controller {
     static {
@@ -27968,7 +27994,9 @@ ${escapeText(this.code(index, length))}
     }
     static targets = ["resource"];
     change(e2) {
+      const event = new Event("change");
       this.resourceTargets.forEach((target) => target.checked = e2.target.checked);
+      this.resourceTargets[0].dispatchEvent(event);
     }
   };
 
@@ -27977,6 +28005,7 @@ ${escapeText(this.code(index, length))}
   application.register(AdminTabController);
   application.register(AdminCleaveController);
   application.register(BackToScopeController);
+  application.register(BatchActionController);
   application.register(ClickableRowController);
   application.register(HamburgerMenuController);
   application.register(DatetimeSelectController);

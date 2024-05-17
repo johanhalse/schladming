@@ -17,7 +17,7 @@ module Schladming
       @columns = columns
       pagy, resources = pagy(filtered_resources, items: 25)
       authorize resources, policy_class: Admin::ApplicationPolicy
-      render Admin::IndexView.new(columns: @columns, scopes:, resources:, pagy:)
+      render Admin::IndexView.new(columns: @columns, scopes:, resources:, multi_actions:, pagy:)
     end
 
     def edit
@@ -72,6 +72,11 @@ module Schladming
       end
     end
 
+    def batch
+      resources = authorize resource_class.where(id: params[:ids]), policy_class: Admin::ApplicationPolicy
+      send("multi_#{params[:function]}", resources)
+    end
+
     def edit_url(resource)
       [:edit, :admin, resource.model_name.singular.to_sym, id: resource.id]
     end
@@ -79,6 +84,8 @@ module Schladming
     def scopes
       []
     end
+
+    def multi_actions; end
 
     def current_user
       return if current_login.blank?

@@ -4,7 +4,9 @@ module ActionDispatch::Routing
       resources.each do |resource|
         resource_name = resource.is_a?(Symbol) ? resource : resource.keys.first
         namespace :admin do
-          resources(resource_name)
+          resources(resource_name) do
+            get "batch", on: :collection
+          end
         end
       end
     end
