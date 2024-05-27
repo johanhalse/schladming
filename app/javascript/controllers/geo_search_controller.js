@@ -2,7 +2,7 @@ import { Controller } from "@johanhalse/musculus";
 import debounce from "debounce";
 
 export default class GeoSearchController extends Controller {
-  static targets = ["field", "visibleField", "results"];
+  static targets = ["lat", "lng", "visibleField", "results"];
   static values = { model: String };
 
   connect() {
@@ -25,8 +25,7 @@ export default class GeoSearchController extends Controller {
         <div>
           <span
             class="block p-2 cursor-pointer hover:bg-neutral-100"
-            name="${location.name}"
-            id="${location.place_id}"
+            data-info='${JSON.stringify(location)}'
             data-action="click->geo-search#select"
           >${location.display_name}</span>
         </div>`
@@ -34,7 +33,6 @@ export default class GeoSearchController extends Controller {
   }
 
   display(response) {
-    console.log(this.buildMarkup(response), this.resultsTarget);
     this.resultsTarget.innerHTML = this.buildMarkup(response);
     this.bindNewActions(this.resultsTarget);
   }
@@ -46,10 +44,10 @@ export default class GeoSearchController extends Controller {
   }
 
   select(e) {
-    const item = e.currentTarget;
-    console.log(item);
-    this.visibleFieldTarget.value = item.getAttribute("name");
-    this.fieldTarget.value = item.id;
+    const item = JSON.parse(e.currentTarget.dataset["info"])
+    this.visibleFieldTarget.value = item.name || item.display_name;
+    this.latTarget.value = item.lat;
+    this.lngTarget.value = item.lon;
     this.resultsTarget.innerHTML = "";
   }
 }

@@ -22,10 +22,16 @@ class GeoFieldComponent< SchladmingComponent
     geo_search_controller(class: FIELD_CONTAINER) do
       @form.label(@name, class: FIELD_LABEL)
       div(class: "w-full @lg:w-auto @lg:grow relative") do
-        input(type: "text", class: %w[block w-full text-neutral-600 rounded border-neutral-300], value: @form.object.send(@name), **@field_data)
+        @form.text_field(
+          @name,
+          type: "text",
+          class: %w[block w-full text-neutral-600 rounded border-neutral-300],
+          **@field_data
+        )
         results
       end
-      @form.hidden_field(@name, data: { geo_search_target: "field" })
+      @form.hidden_field("#{@name}_lat", data: { geo_search_target: "lat" })
+      @form.hidden_field("#{@name}_lng", data: { geo_search_target: "lng" })
     end
   end
 end
