@@ -643,7 +643,7 @@
   // node_modules/debounce/index.js
   var require_debounce = __commonJS({
     "node_modules/debounce/index.js"(exports2, module2) {
-      function debounce4(function_, wait = 100, options = {}) {
+      function debounce5(function_, wait = 100, options = {}) {
         if (typeof function_ !== "function") {
           throw new TypeError(`Expected the first parameter to be a function, got \`${typeof function_}\`.`);
         }
@@ -713,9 +713,9 @@
         };
         return debounced;
       }
-      __name(debounce4, "debounce");
-      module2.exports.debounce = debounce4;
-      module2.exports = debounce4;
+      __name(debounce5, "debounce");
+      module2.exports.debounce = debounce5;
+      module2.exports = debounce5;
     }
   });
 
@@ -16176,6 +16176,53 @@
     }
   };
 
+  // app/javascript/controllers/geo_search_controller.js
+  var import_debounce = __toESM(require_debounce());
+  var GeoSearchController = class extends Controller {
+    static {
+      __name(this, "GeoSearchController");
+    }
+    static targets = ["lat", "lng", "visibleField", "results"];
+    static values = { model: String };
+    connect() {
+      this.debouncedFetchData = (0, import_debounce.default)(this.fetchData.bind(this), 500);
+    }
+    change(e2) {
+      this.debouncedFetchData(e2.target.value);
+    }
+    fetchData(text, update) {
+      fetch("https://nominatim.openstreetmap.org/search?" + new URLSearchParams({ q: text, format: "jsonv2" })).then((response) => response.json()).then((response) => this.display(response));
+    }
+    buildMarkup(response) {
+      return response.map(function(location2) {
+        return `
+        <div>
+          <span
+            class="block p-2 cursor-pointer hover:bg-neutral-100"
+            data-info='${JSON.stringify(location2)}'
+            data-action="click->geo-search#select"
+          >${location2.display_name}</span>
+        </div>`;
+      }).join("");
+    }
+    display(response) {
+      this.resultsTarget.innerHTML = this.buildMarkup(response);
+      this.bindNewActions(this.resultsTarget);
+    }
+    bindNewActions(el) {
+      const actionElements = Array.from(el.querySelectorAll("[data-action]"));
+      const actions = actionElements.flatMap(this.parseAction.bind(this));
+      actions.forEach(this.bindAction.bind(this));
+    }
+    select(e2) {
+      const item = JSON.parse(e2.currentTarget.dataset["info"]);
+      this.visibleFieldTarget.value = item.name || item.display_name;
+      this.latTarget.value = item.lat;
+      this.lngTarget.value = item.lon;
+      this.resultsTarget.innerHTML = "";
+    }
+  };
+
   // node_modules/flatpickr/dist/esm/types/options.js
   var HOOKS = [
     "onChange",
@@ -16340,7 +16387,7 @@
   var int = /* @__PURE__ */ __name(function(bool) {
     return bool === true ? 1 : 0;
   }, "int");
-  function debounce2(fn2, wait) {
+  function debounce3(fn2, wait) {
     var t2;
     return function() {
       var _this = this;
@@ -16351,7 +16398,7 @@
       }, wait);
     };
   }
-  __name(debounce2, "debounce");
+  __name(debounce3, "debounce");
   var arrayify = /* @__PURE__ */ __name(function(obj) {
     return obj instanceof Array ? obj : [obj];
   }, "arrayify");
@@ -16992,8 +17039,8 @@
         setupMobile();
         return;
       }
-      var debouncedResize = debounce2(onResize, 50);
-      self2._debouncedChange = debounce2(triggerChange, DEBOUNCED_CHANGE_MS);
+      var debouncedResize = debounce3(onResize, 50);
+      self2._debouncedChange = debounce3(triggerChange, DEBOUNCED_CHANGE_MS);
       if (self2.daysContainer && !/iPhone|iPad|iPod/i.test(navigator.userAgent))
         bind(self2.daysContainer, "mouseover", function(e2) {
           if (self2.config.mode === "range")
@@ -18649,7 +18696,7 @@
   };
 
   // app/javascript/controllers/relation_search_controller.js
-  var import_debounce = __toESM(require_debounce());
+  var import_debounce2 = __toESM(require_debounce());
   var RelationSearchController = class extends Controller {
     static {
       __name(this, "RelationSearchController");
@@ -18657,7 +18704,7 @@
     static targets = ["field", "visibleField", "results"];
     static values = { model: String };
     connect() {
-      this.debouncedFetchData = (0, import_debounce.default)(this.fetchData.bind(this), 500);
+      this.debouncedFetchData = (0, import_debounce2.default)(this.fetchData.bind(this), 500);
     }
     change(e2) {
       this.debouncedFetchData(e2.target.value);
@@ -28008,6 +28055,7 @@ ${escapeText(this.code(index, length))}
   application.register(BatchActionController);
   application.register(ClickableRowController);
   application.register(HamburgerMenuController);
+  application.register(GeoSearchController);
   application.register(DatetimeSelectController);
   application.register(ImagePreviewController);
   application.register(RelationSearchController);
