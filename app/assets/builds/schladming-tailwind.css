@@ -1280,6 +1280,11 @@ select {
   background-color: rgb(212 212 212 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-neutral-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-orange-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(234 88 12 / var(--tw-bg-opacity));
@@ -1293,11 +1298,6 @@ select {
 .hover\:bg-teal-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(13 148 136 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-neutral-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
 }
 
 .hover\:text-cyan-500:hover {

@@ -28,6 +28,10 @@ module UI
       render FileFieldComponent.new(form: @form, name:, **)
     end
 
+    def geo_field(name, **)
+      render GeoFieldComponent.new(form: @form, name:, **)
+    end
+
     def image_field(name, *)
       render ImageFieldComponent.new(form: @form, name:)
     end
