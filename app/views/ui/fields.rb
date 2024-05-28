@@ -48,6 +48,10 @@ module UI
       render SelectFieldComponent.new(form: @form, name:, options:, translate:, **)
     end
 
+    def tag_field(name, **)
+      render TagFieldComponent.new(form: @form, name:, **)
+    end
+
     def text_area(name, **)
       render TextAreaComponent.new(form: @form, name:, **)
     end
