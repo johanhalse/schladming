@@ -1,7 +1,6 @@
 import "trix";
 import "@hotwired/turbo-rails";
 import "@rails/actiontext";
-// import "chartkick/chart.js";
 import { Application } from "@johanhalse/musculus";
 
 window.Trix.config.blockAttributes.heading1.tagName = "h2";
@@ -19,6 +18,7 @@ import RelationSearchController from "./controllers/relation_search_controller";
 import RichTextEditorController from "./controllers/rich_text_editor_controller";
 import SlugonatorController from "./controllers/slugonator_controller";
 import SelectAllController from "./controllers/select_all_controller";
+import TagFieldController from "./controllers/tag_field_controller";
 
 Application.register(AdminTabController);
 Application.register(AdminCleaveController);
@@ -33,4 +33,5 @@ Application.register(RelationSearchController);
 Application.register(RichTextEditorController);
 Application.register(SlugonatorController);
 Application.register(SelectAllController);
+Application.register(TagFieldController);
 Application.start();
