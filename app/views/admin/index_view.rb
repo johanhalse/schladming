@@ -72,6 +72,21 @@ module Admin
         })
     end
 
+    def enum_name(enums, scope, parent)
+      enums.each do |k, v|
+        return parent if k == scope.to_s
+        if v.is_a?(Hash)
+          result = enum_name(v, scope, k)
+          return result unless result.nil?
+        end
+      end
+      nil
+    end
+
+    def scope_translation(model, scope)
+      model.human_attribute_name("#{enum_name(model.defined_enums, scope, nil)}.#{scope}")
+    end
+
     def scopes
       return if @scopes.blank?
 
@@ -82,7 +97,7 @@ module Admin
 
         @scopes.each do |scope|
           li do
-            a(href: scope_url(scope), class: scope_class(scope)) { @resources.model.human_attribute_name("scopes.#{scope}") }
+            a(href: scope_url(scope), class: scope_class(scope)) { scope_translation(@resources.model, scope) }
           end
         end
       end
