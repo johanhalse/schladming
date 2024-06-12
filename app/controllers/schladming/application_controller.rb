@@ -17,7 +17,7 @@ module Schladming
       @columns = columns
       pagy, resources = pagy(filtered_resources, items: 25)
       authorize resources, policy_class: Admin::ApplicationPolicy
-      render Admin::IndexView.new(columns: @columns, scopes:, resources:, multi_actions:, pagy:)
+      render index_view.new(columns: @columns, scopes:, resources:, multi_actions:, pagy:)
     end
 
     def edit
@@ -94,6 +94,10 @@ module Schladming
     end
 
     private
+
+    def index_view
+      Admin::IndexView
+    end
 
     def not_allowed
       store_location_for(:login, request.fullpath)

@@ -42,6 +42,12 @@ module Admin
       [:admin, @resource.model_name.singular.to_sym, id: @resource.id]
     end
 
+    def back_button
+      back_to_scope_controller(data: { resource: @resource.model_name.singular }) do
+        link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4], data: { action: "back-to-scope#click", turbo_prefetch: "false" })
+      end
+    end
+
     def view_template
       form_for([:admin, @resource], url: form_url, multipart: true, html: { class: "submit-form" }) do |f|
         @form = f
@@ -52,9 +58,7 @@ module Admin
         end
         render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
-          back_to_scope_controller(data: { resource: @resource.model_name.singular }) do
-            link_to("Tillbaka", [:admin, @resource_class], class: LINK + %w[block mt-4], data: { action: "back-to-scope#click", turbo_prefetch: "false" })
-          end
+          back_button
           h1(class: H1) { name }
 
           ul(id: "tabs", class: "flex flex-wrap gap-1 hidden")

@@ -179,13 +179,17 @@ module Admin
       end
     end
 
+    def heading
+      h1(class: H1) { @resources.model_name.human(count: 2) }
+    end
+
     def view_template
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
         render SearchBarComponent.new(query: helpers.params[:q])
       end
       div(class: "p-4", id: "main") do
-        h1(class: H1) { @resources.model_name.human(count: 2) }
+        heading
         scopes
         batch_action_controller(class: "flex gap-2") do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
