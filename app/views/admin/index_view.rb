@@ -91,10 +91,6 @@ module Admin
       return if @scopes.blank?
 
       ul(class: "flex flex-wrap gap-1 py-2") do
-        li do
-          a(href: scope_url(nil), class: scope_class(nil)) { "Alla" }
-        end
-
         @scopes.each do |scope|
           li do
             a(href: scope_url(scope), class: scope_class(scope)) { scope_translation(@resources.model, scope) }

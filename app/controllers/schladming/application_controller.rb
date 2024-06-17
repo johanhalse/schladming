@@ -47,8 +47,7 @@ module Schladming
     end
 
     def create
-      resource = resource_class.new(permitted_params)
-      authorize resource, policy_class: Admin::ApplicationPolicy
+      resource = authorize resource_class.new(permitted_params), policy_class: Admin::ApplicationPolicy
       before_create(resource) if respond_to?(:before_create)
 
       if resource.save
@@ -128,7 +127,9 @@ module Schladming
     def with_scope(all)
       if params[:scope].blank?
         cookies.delete("return_to_#{controller_name.singularize}_tab")
-        return all
+        return all if scopes.blank?
+
+        params[:scope] = scopes.first.to_s
       end
       raise NoSuchScopeError if scopes.exclude?(params[:scope].to_sym)
 
