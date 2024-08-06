@@ -84,6 +84,10 @@ module Admin
     end
 
     def scope_translation(model, scope)
+      if I18n.exists?("activerecord.attributes.#{model.model_name.singular}.#{scope}")
+        return model.human_attribute_name(scope)
+      end
+
       model.human_attribute_name("#{enum_name(model.defined_enums, scope, nil)}.#{scope}")
     end
 
