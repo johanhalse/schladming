@@ -49,6 +49,7 @@ class SchladmingLayout < SchladmingView
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
         javascript_include_tag("admin", "data-turbo-track": "reload", defer: true)
         link(rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css")
+        link(rel: "stylesheet", href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css")
       end
 
       body(lang: I18n.locale) do
