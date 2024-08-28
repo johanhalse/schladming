@@ -25,7 +25,7 @@ module Admin
 
       case as
       when :date
-        span { l(val, format: :short) }
+        span { l(val, format: :day) }
       when :image
         img(src: strat_url(val), alt: "", width: "30")
       when :resource
