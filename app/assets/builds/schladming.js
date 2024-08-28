@@ -18655,11 +18655,11 @@
       __name(this, "DatetimeSelectController");
     }
     connect() {
-      const tmp = esm_default(this.querySelector("input"), {
-        enableTime: true,
-        time_24hr: true,
-        defaultMinute: 0
-      });
+      const defaults2 = { enableTime: true, time_24hr: true, defaultMinute: 0 };
+      const tmp = esm_default(this.querySelector("input"), Object.assign(defaults2, this.appendage()));
+    }
+    appendage() {
+      return this.dataset["inline"] ? { inline: true } : {};
     }
   };
 
