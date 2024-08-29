@@ -17,7 +17,7 @@ module Schladming
       @columns = columns
       pagy, resources = pagy(filtered_resources, items: 25)
       authorize resources, policy_class: Admin::ApplicationPolicy
-      render index_view.new(columns: @columns, scopes:, resources:, multi_actions:, pagy:)
+      render index_view.new(columns: @columns, scopes:, resources:, pagy:)
     end
 
     def edit
@@ -83,8 +83,6 @@ module Schladming
     def scopes
       []
     end
-
-    def multi_actions; end
 
     def current_user
       return if current_login.blank?
