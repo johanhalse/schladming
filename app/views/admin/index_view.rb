@@ -10,11 +10,10 @@ module Admin
     register_element :clickable_row_controller
     register_element :select_all_controller
 
-    def initialize(resources:, columns:, scopes:, multi_actions:, pagy:)
+    def initialize(resources:, columns:, scopes:, pagy:)
       @resources = resources
       @columns = columns
       @scopes = scopes
-      @multi_actions = multi_actions
       @pagy = pagy
     end
 
@@ -47,7 +46,7 @@ module Admin
 
     def resource_row(resource)
       tr(class: "transition-colors even:bg-neutral-150", data: { action: "clickable-row#click", link: resource_url(resource) }) do
-        td(class: "pl-2 w-0") { check_box(resource) } if @multi_actions.present?
+        td(class: "pl-2 w-0") { check_box(resource) } if respond_to?(:multi_actions)
         @columns.each do |column|
           td(class: "px-2 py-1 first:pl-0") do
             format_column(resource, column.first, column.second)
@@ -138,7 +137,7 @@ module Admin
           table(class: "w-full overflow-x-scroll text-mid whitespace-nowrap") do
             thead do
               tr do
-                if @multi_actions.present?
+                if respond_to?(:multi_actions)
                   th(class: "pl-2 w-0") do
                     input(
                       type: "checkbox",
@@ -169,16 +168,6 @@ module Admin
       end
     end
 
-    def multi_action_tabs
-      div(class: "flex gap-2 hidden", data: { batch_action_target: "actionbar" }) do
-        @multi_actions.each do |multi_action|
-          button(class: %w[text-sm bg-neutral-700 hover:bg-neutral-600 text-white p-2], name: "function", value: multi_action) do
-            @resources.model.human_attribute_name("multi_action.#{multi_action}")
-          end
-        end
-      end
-    end
-
     def heading
       h1(class: H1) { @resources.model_name.human(count: 2) }
     end
@@ -191,11 +180,11 @@ module Admin
       div(class: "p-4", id: "main") do
         heading
         scopes
-        batch_action_controller(class: "flex gap-2") do
+        batch_action_controller do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
             input(type: "hidden", name: "scope", value: helpers.params[:scope])
             input(type: "hidden", name: "page", value: helpers.params[:page])
-            multi_action_tabs if @multi_actions.present?
+            multi_actions if respond_to?(:multi_actions)
             listing
           end
         end
