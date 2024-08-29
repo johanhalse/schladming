@@ -180,7 +180,7 @@ module Admin
       div(class: "p-4", id: "main") do
         heading
         scopes
-        batch_action_controller(class: "flex gap-2") do
+        batch_action_controller do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
             input(type: "hidden", name: "scope", value: helpers.params[:scope])
             input(type: "hidden", name: "page", value: helpers.params[:page])
