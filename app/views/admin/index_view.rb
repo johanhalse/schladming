@@ -175,11 +175,11 @@ module Admin
     def view_template
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
-        render SearchBarComponent.new(query: helpers.params[:q])
       end
       div(class: "p-4", id: "main") do
         heading
         scopes
+        render SearchBarComponent.new(query: helpers.params[:q])
         batch_action_controller do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
             input(type: "hidden", name: "scope", value: helpers.params[:scope])

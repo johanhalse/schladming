@@ -31,7 +31,7 @@ module Admin
       link_to(
         [:admin, @resource.model_name.singular.to_sym, id: @resource.id],
         data: { turbo_method: "delete", turbo_confirm: I18n.t("admin.confirm_delete", resource: @resource) },
-        class: BUTTON_ALERT) do
+        class: BUTTON_ALERT + %w[ml-auto]) do
           "Ta bort"
         end
     end

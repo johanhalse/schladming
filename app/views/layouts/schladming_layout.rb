@@ -56,7 +56,10 @@ class SchladmingLayout < SchladmingView
         render FlashMessageComponent.new
         div(class: "flex min-h-[100dvh] bg-neutral-50") do
           left_menu
-          main(class: "w-full overflow-auto", &block)
+          main(class: "w-full overflow-auto") do
+            render GlobalSearchBarComponent.new
+            yield
+          end
         end
       end
     end

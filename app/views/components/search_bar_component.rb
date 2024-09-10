@@ -13,7 +13,7 @@ class SearchBarComponent < ApplicationComponent
 
   def view_template
     form(method: "get", action: search_url, class: "flex") do
-      input(type: "search", class: %w[max-w-md border-0], name: "q", value: @query, placeholder: "Sök")
+      input(type: "search", class: %w[w-full border-black rounded], name: "q", value: @query, placeholder: "Filtrera")
     end
   end
 end
