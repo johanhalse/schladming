@@ -183,7 +183,7 @@ module Admin
         batch_action_controller do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
             input(type: "hidden", name: "scope", value: helpers.params[:scope])
-            input(type: "hidden", name: "page", value: helpers.params[:page])
+            input(type: "hidden", name: "page", value: helpers.params[:page] || 1)
             multi_actions if respond_to?(:multi_actions)
             listing
           end
