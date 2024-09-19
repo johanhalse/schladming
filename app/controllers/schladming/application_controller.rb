@@ -15,7 +15,7 @@ module Schladming
     def index
       @columns = []
       @columns = columns
-      pagy, resources = pagy(filtered_resources, items: 25)
+      pagy, resources = pagy(filtered_resources, limit: 25)
       authorize resources, policy_class: Admin::ApplicationPolicy
       render index_view.new(columns: @columns, scopes:, resources:, pagy:)
     end

@@ -7,7 +7,7 @@ class PraginationComponent < ApplicationComponent
   end
 
   def render?
-    @pagy.items.positive?
+    @pagy.limit.positive?
   end
 
   def next_link
