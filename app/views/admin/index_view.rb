@@ -172,10 +172,14 @@ module Admin
       h1(class: H1) { @resources.model_name.human(count: 2) }
     end
 
-    def view_template
+    def top_bar
       render TopBarComponent.new do
         link_to("Ny", [:new, :admin, @resources.model_name.singular.to_sym], class: BUTTON_PRIMARY)
       end
+    end
+
+    def view_template
+      top_bar
       div(class: "p-4", id: "main") do
         heading
         scopes
