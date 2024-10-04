@@ -90,13 +90,21 @@ module Admin
       model.human_attribute_name("#{enum_name(model.defined_enums, scope, nil)}.#{scope}")
     end
 
+    def scope_count(model, scope)
+      "(#{model.send(scope).count})"
+    end
+
     def scopes
       return if @scopes.blank?
 
       ul(class: "flex flex-wrap gap-1 py-2") do
         @scopes.each do |scope|
           li do
-            a(href: scope_url(scope), class: scope_class(scope)) { scope_translation(@resources.model, scope) }
+            a(href: scope_url(scope), class: scope_class(scope)) do
+              span { scope_translation(@resources.model, scope) }
+              whitespace
+              span { scope_count(@resources.model, scope) }
+            end
           end
         end
       end
