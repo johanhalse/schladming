@@ -1,5 +1,3 @@
-require "ransack"
-
 module Schladming
   class ApplicationController < ActionController::Base
     include Devise::Controllers::Helpers
