@@ -1,3 +1,5 @@
+require "ransack"
+
 module Schladming
   class ApplicationController < ActionController::Base
     include Devise::Controllers::Helpers
@@ -148,15 +150,11 @@ module Schladming
       end
     end
 
-    def with_search(all)
-      return all if params[:q].blank?
+    def with_search(resource_class)
+      return resource_class if params[:q].blank?
+      return resource_class unless resource_class.respond_to?(:admin_search)
 
-      props = Schladming.searchable_properties & resource_class.column_names
-
-      join_query = props.map do |prop|
-        "#{prop} ILIKE ?"
-      end.join(" OR ")
-      all.where(join_query, *props.map { "%#{params[:q]}%" })
+      resource_class.admin_search(params[:q])
     end
 
     def count
@@ -164,9 +162,11 @@ module Schladming
     end
 
     def filtered_resources
-      with_sorting(
-        with_search(
-          with_scope(resource_class.all)
+      with_search(
+        with_sorting(
+          with_scope(
+            resource_class
+          )
         )
       )
     end
