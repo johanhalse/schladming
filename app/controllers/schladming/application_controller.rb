@@ -150,9 +150,8 @@ module Schladming
 
     def with_search(resource_class)
       return resource_class if params[:q].blank?
-      return resource_class unless resource_class.respond_to?(:admin_search)
 
-      resource_class.admin_search(params[:q])
+      resource_class.joins(:search_item).where("search_items.body ILIKE ?", "%#{params[:q]}%")
     end
 
     def count

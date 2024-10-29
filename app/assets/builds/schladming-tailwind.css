@@ -901,14 +901,6 @@ select {
   height: 180px;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
 .max-h-80 {
   max-height: 20rem;
 }
@@ -1022,10 +1014,6 @@ select {
 
 .overflow-auto {
   overflow: auto;
-}
-
-.overflow-hidden {
-  overflow: hidden;
 }
 
 .overflow-x-scroll {
