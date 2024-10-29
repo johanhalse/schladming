@@ -14,7 +14,7 @@ module Admin
     end
 
     def view_template
-      ul(class: "border") do
+      ul(class: "border max-h-80 overflow-auto") do
         @resources.each do |resource|
           li(class: "border-t first:border-0 p-2 hover:bg-neutral-100 cursor-pointer", id: resource.id, name: resource.to_s, data:) do
             render search_component.new(resource:)
