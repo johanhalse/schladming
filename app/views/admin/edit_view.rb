@@ -1,5 +1,6 @@
 module Admin
   class EditView < SchladmingView
+    include Phlex::Rails::Helpers::DOMID
     include Phlex::Rails::Helpers::LinkTo
     include Phlex::Rails::Helpers::FormFor
     include UI::Fields
@@ -48,14 +49,23 @@ module Admin
       end
     end
 
+    def form_id
+      dom_id(@resource, @resource.persisted? ? :edit : :new)
+    end
+
+    def submit_text
+      key = @resource.persisted? ? :update : :create
+      I18n.t("helpers.submit.#{key}", model: @resource.model_name.human)
+    end
+
     def view_template
+      render TopBarComponent.new do
+        input(type: "submit", class: BUTTON_PRIMARY, form: form_id, value: submit_text)
+        top_bar_buttons if respond_to?(:top_bar_buttons)
+        delete_link if @resource.persisted?
+      end
       form_for([:admin, @resource], url: form_url, multipart: true, html: { class: "submit-form" }) do |f|
         @form = f
-        render TopBarComponent.new do
-          f.submit(class: BUTTON_PRIMARY)
-          top_bar_buttons if respond_to?(:top_bar_buttons)
-          delete_link if @resource.persisted?
-        end
         render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
           back_button
