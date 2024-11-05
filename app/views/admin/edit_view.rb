@@ -50,7 +50,7 @@ module Admin
     end
 
     def form_id
-      dom_id(@resource, @resource.persisted? ? :edit : :new)
+      "main_form_#{@resource.id}"
     end
 
     def submit_text
@@ -64,7 +64,7 @@ module Admin
         top_bar_buttons if respond_to?(:top_bar_buttons)
         delete_link if @resource.persisted?
       end
-      form_for([:admin, @resource], url: form_url, multipart: true, html: { class: "submit-form" }) do |f|
+      form_for([:admin, @resource], url: form_url, multipart: true, html: { id: form_id, class: "submit-form" }) do |f|
         @form = f
         render ErrorMessagesComponent.new(resource: @resource)
         div(class: "px-4", id: "main") do
