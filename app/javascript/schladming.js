@@ -1,9 +1,6 @@
-import "trix";
 import "@hotwired/turbo-rails";
 import "@rails/actiontext";
 import { Application } from "@johanhalse/musculus";
-
-window.Trix.config.blockAttributes.heading1.tagName = "h2";
 
 import AdminTabController from "./controllers/admin_tab_controller";
 import AdminCleaveController from "./controllers/admin_cleave_controller";

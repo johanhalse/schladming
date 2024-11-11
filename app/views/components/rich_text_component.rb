@@ -1,4 +1,4 @@
-class TrixComponent< SchladmingComponent
+class RichTextComponent< SchladmingComponent
   include UI::Classes
 
   register_element :rich_text_editor_controller

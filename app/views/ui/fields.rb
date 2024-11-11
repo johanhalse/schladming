@@ -60,8 +60,8 @@ module UI
       render TextFieldComponent.new(form: @form, name:, **)
     end
 
-    def trix_area(name, **)
-      render TrixComponent.new(form: @form, name:, **)
+    def rich_text_area(name, **)
+      render RichTextComponent.new(form: @form, name:, **)
     end
   end
 end
