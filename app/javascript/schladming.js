@@ -1,5 +1,4 @@
 import "@hotwired/turbo-rails";
-import "@rails/actiontext";
 import { Application } from "@johanhalse/musculus";
 
 import AdminTabController from "./controllers/admin_tab_controller";

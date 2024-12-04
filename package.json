@@ -30,6 +30,7 @@
     "tailwindcss": "^3.4.3"
   },
   "dependencies": {
-    "@yaireo/tagify": "^4.26.5"
+    "@yaireo/tagify": "^4.26.5",
+    "quill-html-edit-button": "^3.0.0"
   }
 }
