@@ -45,7 +45,7 @@ class SchladmingLayout < SchladmingView
 
         stylesheet_link_tag("schladming-tailwind", "inter-font", "flatpickr.min", "data-turbo-track": "reload")
         stylesheet_link_tag("tagify", "data-turbo-track": "reload")
-        stylesheet_link_tag("admin", "data-turbo-track": "reload")
+        stylesheet_link_tag("admin-compiled", "data-turbo-track": "reload")
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
         javascript_include_tag("admin", "data-turbo-track": "reload", defer: true)
         link(rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css")
