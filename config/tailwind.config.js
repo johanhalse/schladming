@@ -4,9 +4,12 @@ module.exports = {
   content: [
     './app/views/**/*.{rb,erb,html}',
     './app/views/components/**/*rb',
+    "../highway/app/javascript/**/*.js",
+    "../highway/app/views/admin/**/*",
+    "../highway/app/views/components/admin/**/*",
     './public/*.html',
     './app/helpers/**/*.rb',
-    './app/javascript/**/*.js'
+    './app/javascript/**/*.js',
   ],
   theme: {
     extend: {
