@@ -23,7 +23,7 @@ class RelationFieldComponent< SchladmingComponent
     relation_search_controller(class: FIELD_CONTAINER, data: { relation_search_model_value: @model_name }) do
       @form.label(@name, class: FIELD_LABEL)
       div(class: "w-full @lg:w-auto @lg:grow relative") do
-        input(type: "text", class: %w[block w-full text-neutral-600 rounded border-neutral-300], value: @form.object.send(@name), **@field_data)
+        input(type: "text", class: %w[block w-full text-neutral-600 rounded border-neutral-300], value: @form.object.send(@name).to_s, **@field_data)
         results
       end
       @form.hidden_field("#{@name}_id", data: { relation_search_target: "field" })

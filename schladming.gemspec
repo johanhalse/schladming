@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "pagy", ">= 9.0.9"
-  spec.add_dependency "phlex-rails", ">= 1.1.0"
+  spec.add_dependency "phlex-rails", ">= 2.0.2"
   spec.add_dependency "pundit", ">= 2.3.0"
   spec.add_dependency "qasa-url", ">= 0.1.0"
   spec.add_dependency "rails", ">= 7.1.0"

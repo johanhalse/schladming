@@ -10,7 +10,7 @@ class TabComponent< SchladmingComponent
   end
 
   def clickable_tab_template
-    template_tag(id: "template_#{@id}") do
+    template(id: "template_#{@id}") do
       li do
         admin_tab_controller do
           label(class: TAB + TAB_NEUTRAL, data: { action: "click->admin-tab#mark" }, for: @id) { @name }
@@ -31,10 +31,12 @@ class TabComponent< SchladmingComponent
       div(class: "hidden peer-checked:block", &block)
     end
     script do
-      unsafe_raw <<-SKRIPT
-        tabs.appendChild(template_#{@id}.content.cloneNode(true));
-        tabs.classList.remove("hidden");
-      SKRIPT
+      raw safe(
+        <<-SKRIPT
+          tabs.appendChild(template_#{@id}.content.cloneNode(true));
+          tabs.classList.remove("hidden");
+        SKRIPT
+      )
     end
   end
 end

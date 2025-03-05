@@ -100,7 +100,7 @@ module Admin
       ul(class: "flex flex-wrap gap-1 py-2") do
         @scopes.each do |scope|
           li do
-            a(href: scope_url(scope), class: scope_class(scope)) do
+            a(href: scope_url(scope).to_s, class: scope_class(scope)) do
               span { scope_translation(@resources.model, scope) }
               whitespace
               span { scope_count(@resources.model, scope) }
@@ -111,15 +111,15 @@ module Admin
     end
 
     def scope_class(scope)
-      tokens(
+      [
         TAB,
-        -> { helpers.params[:scope] != scope&.to_s } => TAB_NEUTRAL,
-        -> { helpers.params[:scope] == scope&.to_s } => TAB_SELECTED
-      )
+        (TAB_NEUTRAL if params[:scope] != scope&.to_s),
+        (TAB_SELECTED if params[:scope] == scope&.to_s)
+      ]
     end
 
     def scope_url(scope)
-      current_url = URL.parse(helpers.request.original_url)
+      current_url = URL.parse(request.original_url)
 
       if scope.nil?
         current_url.query.delete("scope")
@@ -130,7 +130,7 @@ module Admin
     end
 
     def sort_url(sort_key)
-      current_url = URL.parse(helpers.request.original_url)
+      current_url = URL.parse(request.original_url)
       if current_url.query["sort"].nil?
         current_url.merge(sort: sort_key, direction: "desc")
       else
@@ -157,7 +157,7 @@ module Admin
                 end
                 @columns.each do |column|
                   th(class: "px-2 py-1 text-left first:pl-0") do
-                    a(href: sort_url(column.last)) do
+                    a(href: sort_url(column.last).to_s) do
                       next "Namn" if column.first == :to_s
                       @resources.model.human_attribute_name(column.first)
                     end
@@ -191,16 +191,16 @@ module Admin
       div(class: "p-4", id: "main") do
         heading
         scopes
-        render SearchBarComponent.new(query: helpers.params[:q])
+        render SearchBarComponent.new(query: params[:q])
         batch_action_controller do
           form(method: "post", action: url_for([:batch, :admin, @resources.model_name.plural.to_sym])) do
-            input(type: "hidden", name: "scope", value: helpers.params[:scope])
-            input(type: "hidden", name: "page", value: helpers.params[:page] || 1)
+            input(type: "hidden", name: "scope", value: params[:scope])
+            input(type: "hidden", name: "page", value: params[:page] || 1)
             multi_actions if respond_to?(:multi_actions)
             listing
           end
         end
-        render PraginationComponent.new(pagy: @pagy, url: helpers.request.original_url)
+        render PraginationComponent.new(pagy: @pagy, url: request.original_url)
       end
     end
   end

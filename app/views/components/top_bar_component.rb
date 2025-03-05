@@ -22,7 +22,7 @@ class TopBarComponent< SchladmingComponent
       div(class: "flex flex-wrap pr-10 lg:pr-0", &block)
       hamburger_menu_controller(class: "md:hidden absolute top-2 right-2 w-8 h-8") do
         svg(viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", data: data) do
-          unsafe_raw(hamburger_svg)
+          raw safe(hamburger_svg)
         end
       end
     end

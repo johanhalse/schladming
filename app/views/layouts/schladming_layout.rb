@@ -28,7 +28,7 @@ class SchladmingLayout < SchladmingView
   end
 
   def translated_controller
-    I18n.t("activerecord.models.#{helpers.controller_name.singularize}.other")
+    I18n.t("activerecord.models.#{controller_name.singularize}.other")
   end
 
   def view_template(&block)
@@ -39,7 +39,6 @@ class SchladmingLayout < SchladmingView
         title { "Bidders Highway - #{translated_controller}" }
         csrf_meta_tags
         csp_meta_tag
-        meta(http_equiv: "x-ua-compatible", content: "ie=edge")
         meta(name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no")
         meta(name: "format-detection", content: "telephone=no")
 

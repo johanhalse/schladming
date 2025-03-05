@@ -5,7 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem "puma"
-gem "phlex-rails"
 gem "sqlite3"
 
 # Start debugger with binding.b [https://github.com/ruby/debug]

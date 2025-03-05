@@ -1,7 +1,7 @@
 class FlashMessageComponent< SchladmingComponent
   def view_template
     div(class: "bg-yellow-200") do
-      helpers.flash.each do |type, msg|
+      flash.each do |type, msg|
         div(class: "alert w-full flex items-center justify-center gap-2 p-4") do
           span { msg }
         end
@@ -10,7 +10,7 @@ class FlashMessageComponent< SchladmingComponent
   end
 
   def render?
-    helpers.flash.any?
+    flash.any?
   end
 
   def color(type)

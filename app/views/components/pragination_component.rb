@@ -13,13 +13,13 @@ class PraginationComponent < ApplicationComponent
   def next_link
     return unless @pagy.next
 
-    a(href: @url.merge("page" => @pagy.next).to_s,class: LINK_CLASS) { t(".next") }
+    a(href: @url.merge("page" => @pagy.next).to_s, class: LINK_CLASS) { t(".next") }
   end
 
   def prev_link
     return unless @pagy.prev
 
-    a(href: @url.merge("page" => @pagy.prev).to_s,class: LINK_CLASS) { t(".prev") }
+    a(href: @url.merge("page" => @pagy.prev).to_s, class: LINK_CLASS) { t(".prev") }
   end
 
   def pages
@@ -29,7 +29,7 @@ class PraginationComponent < ApplicationComponent
       if (i == @pagy.page)
         span { i }
       else
-        a(href: @url.merge("page" => i), class: LINK_CLASS) { i }
+        a(href: @url.merge("page" => i).to_s, class: LINK_CLASS) { i }
       end
     end
   end

@@ -6,7 +6,7 @@ class SearchBarComponent < ApplicationComponent
   end
 
   def search_url
-    url = URL.parse(helpers.request.url)
+    url = URL.parse(request.url)
     url.query.delete(:q)
     url.to_s
   end
