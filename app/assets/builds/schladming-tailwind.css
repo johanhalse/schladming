@@ -793,6 +793,10 @@ select {
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
 }
 
+.bg-racing-900 {
+  background-color: #0c3923;
+}
+
 .visible {
   visibility: visible;
 }
@@ -1200,6 +1204,10 @@ select {
 
 .rounded-full {
   border-radius: 9999px;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
 }
 
 .rounded-t {

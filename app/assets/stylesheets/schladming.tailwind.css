@@ -5,4 +5,5 @@
 @layer components {
   .field_with_errors .fl { @apply text-red-600; }
   .field_with_errors .fi { @apply border-red-600; }
+  .bg-racing-900 { background-color: #0c3923; }
 }
