@@ -6,7 +6,7 @@ module Schladming
 
     rescue_from Pundit::NotAuthorizedError, with: :not_allowed
 
-    layout -> { SchladmingLayout }
+    layout false
     class NoSuchScopeError < StandardError; end
 
     after_action :verify_authorized

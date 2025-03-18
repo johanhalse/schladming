@@ -1,5 +1,6 @@
 class SchladmingLayout < SchladmingView
-  include Phlex::Rails::Layout
+  include Phlex::Rails::Helpers::CSRFMetaTags
+  include Phlex::Rails::Helpers::CSPMetaTag
   include Phlex::Rails::Helpers::Flash
   include Phlex::Rails::Helpers::JavascriptIncludeTag
   include Phlex::Rails::Helpers::LinkTo
@@ -31,12 +32,16 @@ class SchladmingLayout < SchladmingView
     I18n.t("activerecord.models.#{controller_name.singularize}.other")
   end
 
-  def view_template(&block)
+  def page_title
+    "#{translated_controller} - Admin"
+  end
+
+  def around_template(&block)
     doctype
 
     html(lang: I18n.locale) do
       head do
-        title { "Bidders Highway - #{translated_controller}" }
+        title { page_title }
         csrf_meta_tags
         csp_meta_tag
         meta(name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no")

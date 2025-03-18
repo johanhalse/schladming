@@ -1,5 +1,5 @@
 module Admin
-  class IndexView < SchladmingView
+  class IndexView < SchladmingLayout
     include Phlex::Rails::Helpers::DOMID
     include Phlex::Rails::Helpers::L
     include Phlex::Rails::Helpers::LinkTo

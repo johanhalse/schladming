@@ -1,5 +1,5 @@
 module Admin
-  class EditView < SchladmingView
+  class EditView < SchladmingLayout
     include Phlex::Rails::Helpers::DOMID
     include Phlex::Rails::Helpers::LinkTo
     include Phlex::Rails::Helpers::FormFor
@@ -13,6 +13,10 @@ module Admin
       @resource_name = resource_name
       @resource_class = resource_class
       @tabs = []
+    end
+
+    def page_title
+      "#{@resource} - Admin"
     end
 
     def fields_for(name)
