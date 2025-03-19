@@ -20,7 +20,7 @@ class RelationFieldComponent< SchladmingComponent
   end
 
   def view_template
-    relation_search_controller(class: FIELD_CONTAINER, data: { relation_search_model_value: @model_name }) do
+    relation_search_controller(class: FIELD_CONTAINER, data: { relation_search_model_value: @model_name.to_s }) do
       @form.label(@name, class: FIELD_LABEL)
       div(class: "w-full @lg:w-auto @lg:grow relative") do
         input(type: "text", class: %w[block w-full text-neutral-600 rounded border-neutral-300], value: @form.object.send(@name).to_s, **@field_data)
