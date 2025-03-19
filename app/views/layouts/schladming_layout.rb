@@ -52,6 +52,17 @@ class SchladmingLayout < SchladmingView
         javascript_include_tag("schladming", "data-turbo-track": "reload", defer: true)
         link(rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.snow.css")
         link(rel: "stylesheet", href: "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css")
+        script do
+          raw(
+            safe(
+              <<-KEYS
+              window.imageClientId = "#{ENV["IMAGES_CLIENT_ID"]}";
+              window.imageClientSecret = "#{ENV["IMAGES_CLIENT_SECRET"]}";
+              window.imageBucketId = "#{ENV["IMAGES_BUCKET_ID"]}";
+              KEYS
+            )
+          )
+        end
       end
 
       body(lang: I18n.locale) do

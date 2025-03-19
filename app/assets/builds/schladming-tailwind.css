@@ -797,6 +797,40 @@ select {
   background-color: #0c3923;
 }
 
+.image-uploading {
+  position: relative;
+  display: inline-block;
+}
+
+.image-uploading img {
+  max-width: 98% !important;
+  filter: blur(5px);
+  opacity: 0.3;
+}
+
+.image-uploading::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  border-top-color: #1e986c;
+  z-index: 1;
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .visible {
   visibility: visible;
 }
@@ -949,6 +983,10 @@ select {
 
 .grid {
   display: grid;
+}
+
+.contents {
+  display: contents;
 }
 
 .hidden {
@@ -1515,6 +1553,10 @@ select {
 
 .capitalize {
   text-transform: capitalize;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .leading-loose {
