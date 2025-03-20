@@ -55756,6 +55756,7 @@ For more information please go to https://github.com/aws/aws-sdk-js-v3#functiona
   var toolbarOptions = [
     [{ header: [1, 2, 3, false] }],
     ["bold", "italic"],
+    [{ "list": "bullet" }, { "list": "ordered" }],
     ["clean"],
     ["image"]
   ];

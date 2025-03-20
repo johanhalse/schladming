@@ -10,6 +10,7 @@ Quill.register("modules/imageUploader", ImageUploader);
 const toolbarOptions = [
   [{ header: [1, 2, 3, false] }],
   ["bold", "italic"],
+  [{ "list": "bullet"}, { "list": "ordered" }],
   ["clean"],
   ["image"],
 ];
