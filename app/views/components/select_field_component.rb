@@ -15,7 +15,7 @@ class SelectFieldComponent< SchladmingComponent
   end
 
   def translated_key(key)
-    I18n.t("activerecord.attributes.#{@form.object.model_name.singular}.#{@name}/#{key}")
+    @form.object.class.human_attribute_name("#{@name}.#{key}")
   end
 
   def view_template
