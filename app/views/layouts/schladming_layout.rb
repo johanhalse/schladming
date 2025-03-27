@@ -9,16 +9,6 @@ class SchladmingLayout < SchladmingView
   LEFT_MENU_CLASS = %w[w-full -translate-x-full max-w-xs md:translate-x-0 md:w-1/6 md:h-auto md:static md:block absolute z-10 bg-neutral-700
                        text-white transition-all]
 
-  def left_menu
-    ul(class: LEFT_MENU_CLASS + ["min-w-[200px]"], id: "left-menu") do
-      Schladming.menu_items.each do |route|
-        li do
-          link_to(route_name(route), route_link(route), class: "block w-full px-4 py-2 hover:text-neutral-300")
-        end
-      end
-    end
-  end
-
   def route_link(route)
     route.is_a?(Symbol) ? [:admin, route] : [:admin, route.keys.first, route.values.first]
   end
@@ -68,7 +58,7 @@ class SchladmingLayout < SchladmingView
       body(lang: I18n.locale) do
         render FlashMessageComponent.new
         div(class: "flex min-h-[100dvh] bg-neutral-50") do
-          left_menu
+          render Filter::LeftMenuComponent.new
           main(class: "w-full overflow-auto") do
             render GlobalSearchBarComponent.new
             yield
