@@ -1,5 +1,7 @@
 module Admin
   class EditView < SchladmingLayout
+    # max-w-lg gap-2 mb-3 last:mb-0 text-sm md:w-1/3 lg:1/4 md:mb-0 md:w-2/3 lg:w-3/4 border-neutral-400 h-1 w-1
+
     include Phlex::Rails::Helpers::DOMID
     include Phlex::Rails::Helpers::LinkTo
     include Phlex::Rails::Helpers::FormFor

@@ -15,6 +15,7 @@ import GlobalSearchController from "../../../highway/app/javascript/admin/global
 import HamburgerMenuController from "./controllers/hamburger_menu_controller";
 import ImagePreviewController from "./controllers/image_preview_controller";
 import LeadDialogController from "../../../highway/app/javascript/admin/lead_dialog_controller";
+import LeadEmailSelectController from "../../../highway/app/javascript/admin/lead_email_select_controller";
 import LeadFiltersController from "../../../highway/app/javascript/admin/lead_filters_controller";
 import LeadGroupController from "../../../highway/app/javascript/admin/lead_group_controller";
 import LeafletController from "../../../highway/app/javascript/admin/leaflet_controller";
@@ -41,6 +42,7 @@ Application.register(GlobalSearchController);
 Application.register(HamburgerMenuController);
 Application.register(ImagePreviewController);
 Application.register(LeadDialogController);
+Application.register(LeadEmailSelectController);
 Application.register(LeadFiltersController);
 Application.register(LeadGroupController);
 Application.register(LeafletController);

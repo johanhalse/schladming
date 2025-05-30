@@ -36400,6 +36400,21 @@ ${$r(this.code(t5, e5))}
     }
   };
 
+  // ../highway/app/javascript/admin/lead_email_select_controller.js
+  var LeadEmailSelectController = class extends Controller2 {
+    static {
+      __name(this, "LeadEmailSelectController");
+    }
+    connect() {
+      this.emailType = this.querySelector("select");
+      this.refreshor = this.querySelector("input");
+      this.emailType.addEventListener("change", this.onChange.bind(this), false);
+    }
+    onChange(e3) {
+      this.refreshor.click();
+    }
+  };
+
   // ../highway/app/javascript/admin/lead_filters_controller.js
   var LeadFiltersController = class extends Controller2 {
     static {
@@ -57516,6 +57531,7 @@ For more information please go to https://github.com/aws/aws-sdk-js-v3#functiona
   application.register(HamburgerMenuController);
   application.register(ImagePreviewController);
   application.register(LeadDialogController);
+  application.register(LeadEmailSelectController);
   application.register(LeadFiltersController);
   application.register(LeadGroupController);
   application.register(LeafletController);
