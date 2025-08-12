@@ -55,11 +55,12 @@ class SchladmingLayout < SchladmingView
         end
       end
 
+      # md:w-1/4 lg:w-1/5 xl:w-1/7 2xl:w-1/8
       body(lang: I18n.locale) do
         render FlashMessageComponent.new
         div(class: "flex min-h-[100dvh] bg-neutral-50") do
           render Filter::LeftMenuComponent.new
-          main(class: "w-full overflow-auto") do
+          main(class: "w-full md:w-3/4 lg:w-4/5 xl:w-6/7 2xl:w-7/8 overflow-auto") do
             render GlobalSearchBarComponent.new
             yield
           end
